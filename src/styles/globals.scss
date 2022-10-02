@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  html {
+    font-family: Roboto, system-ui, sans-serif;
+  }
+  body {
+    @apply bg-gray-50 h-screen;
+  }
+}
+
+.panel-title {
+  @apply text-lg font-semibold py-1 text-gray-600;
+}
