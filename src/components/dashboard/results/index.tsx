@@ -42,9 +42,9 @@ const rows = [
 
 export default function ResultsPanel() {
   return (
-    <div className="w-full flex min-h-max flex-col">
-      <h2 className="panel-title pl-2">Results</h2>
-      <div className="w-full h-96 pl-1">
+    <div className="w-full flex min-h-max h-1/2 flex-col">
+      <h2 className="panel-title pl-2 bg-gray-100">Results</h2>
+      <div className="w-full min-h-[300px] h-full pt-1 pl-1">
         <DataGrid
           rows={rows}
           columns={columns}

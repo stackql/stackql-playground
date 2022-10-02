@@ -3,7 +3,7 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
-import { Divider, Drawer } from "@mui/material";
+import { Divider, Drawer, Paper } from "@mui/material";
 interface RenderTree {
   id: string;
   name: string;
@@ -40,20 +40,10 @@ const Explorer = () => {
     </TreeItem>
   );
   return (
-    <Drawer
-      className="w-1/6 flex-col"
-      variant="permanent"
-      anchor="left"
-      sx={{
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: "16.667%",
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <h2 className="panel-title text-center">Explorer</h2>
-      <Divider />
+    <div className="w-1/6 flex-col border-right">
+      <h2 className="panel-title text-center bg-gray-100 border-bottom">
+        Explorer
+      </h2>
       <TreeView
         aria-label="rich object"
         defaultCollapseIcon={<ExpandMoreIcon />}
@@ -64,7 +54,7 @@ const Explorer = () => {
       >
         {renderTree(data)}
       </TreeView>
-    </Drawer>
+    </div>
   );
 };
 

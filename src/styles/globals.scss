@@ -13,3 +13,10 @@
 .panel-title {
   @apply text-lg font-semibold py-1 text-gray-600;
 }
+
+.border-right {
+  @apply border-r-gray-300 border-r;
+}
+.border-bottom {
+  @apply border-b-gray-300 border-b;
+}
