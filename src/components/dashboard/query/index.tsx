@@ -8,7 +8,7 @@ const QueryPanel = () => {
     { ssr: false }
   );
   return (
-    <div className="w-full flex-col h-96">
+    <div className="w-full flex-col h-1/2 border-bottom">
       <Toolbar variant="dense" className="bg-gray-100 text-black min-h-min">
         <h2 className="panel-title">Query</h2>
       </Toolbar>

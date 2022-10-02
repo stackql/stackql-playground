@@ -1,7 +1,8 @@
-import Explorer from "../components/explorer";
-import dynamic from "next/dynamic";
-import QueryPanel from "../components/query";
-import ResultsPanel from "../components/results";
+import Explorer from "../components/dashboard/explorer";
+import QueryPanel from "../components/dashboard/query";
+import ResultsPanel from "../components/dashboard/results";
+import Layout from "../components/layout";
+import { ReactElement } from "react";
 
 const Dashboard = () => {
   return (
@@ -16,6 +17,10 @@ const Dashboard = () => {
       </div>
     </div>
   );
+};
+
+Dashboard.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default Dashboard;
