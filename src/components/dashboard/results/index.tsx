@@ -43,16 +43,17 @@ const rows = [
 export default function ResultsPanel() {
   return (
     <div className="w-full flex min-h-max h-1/2 flex-col">
-      <h2 className="panel-title pl-2 bg-gray-100">Results</h2>
-      <div className="w-full min-h-[300px] h-full pt-1 pl-1">
+      <h2 className="panel-title pl-2 bg-gray-100 border-bottom">Results</h2>
+      <div className="  w-full h-[90%] rounded-sm flex bg-white p-4 shadow-sm">
         <DataGrid
           rows={rows}
           columns={columns}
+          headerHeight={37}
+          rowHeight={37}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          className="pl-1"
           sx={{
-            fontSize: "12px",
+            fontSize: "14px",
           }}
         />
       </div>
