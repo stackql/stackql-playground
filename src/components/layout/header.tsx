@@ -11,9 +11,20 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import IconButton from '@mui/material/IconButton';
 import '../../styles/Home.module.css';
 import SplitButton from '../splitbutton/SplitButton';
-
 import Image from "next/image";
+import React from "react";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 const Header = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
   return (
     <div className="bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-8 pt-3 pb-3 flex items-center">
       <div className="w-1/6 flex-col">
@@ -22,11 +33,21 @@ const Header = () => {
       <div className="w-4/6 flex-col">
         <Stack direction="row" spacing={2}>
           <Button
+            onClick={handleToggle}
             variant="outlined"
             sx={{ color: 'rgb(15, 76, 129)', backgroundColor: 'white', borderColor: 'rgb(15, 76, 129)' }}
             startIcon={<PlayCircleFilledWhiteIcon />}>
-            Delete
+            Run Query
           </Button>
+
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+
           <Button
             variant="outlined"
             sx={{ color: 'rgb(15, 76, 129)', backgroundColor: 'white', borderColor: 'rgb(15, 76, 129)' }}
