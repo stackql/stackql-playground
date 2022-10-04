@@ -1,20 +1,15 @@
-import {
-  AppBar,
-  Paper,
-  Button,
-  Stack,
-} from "@mui/material";
+import { AppBar, Paper, Button, Stack } from "@mui/material";
 
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import DataObjectIcon from '@mui/icons-material/DataObject';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import IconButton from '@mui/material/IconButton';
-import '../../styles/Home.module.css';
-import SplitButton from '../splitbutton/SplitButton';
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import DataObjectIcon from "@mui/icons-material/DataObject";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import IconButton from "@mui/material/IconButton";
+import "../../styles/Home.module.css";
+import SplitButton from "../splitbutton/SplitButton";
 import Image from "next/image";
 import React from "react";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
@@ -35,13 +30,15 @@ const Header = () => {
           <Button
             onClick={handleToggle}
             variant="outlined"
-            sx={{ color: 'rgb(15, 76, 129)', backgroundColor: 'white', borderColor: 'rgb(15, 76, 129)' }}
-            startIcon={<PlayCircleFilledWhiteIcon />}>
+            className="button-primary"
+            startIcon={<PlayCircleFilledWhiteIcon />}
+          >
             Run Query
           </Button>
 
           <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            className="w-screen ml-0"
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={open}
             onClick={handleClose}
           >
@@ -50,8 +47,9 @@ const Header = () => {
 
           <Button
             variant="outlined"
-            sx={{ color: 'rgb(15, 76, 129)', backgroundColor: 'white', borderColor: 'rgb(15, 76, 129)' }}
-            startIcon={<DataObjectIcon />}>
+            className="button-primary"
+            startIcon={<DataObjectIcon />}
+          >
             Get Types
           </Button>
           <SplitButton />
@@ -69,8 +67,5 @@ const Header = () => {
     </div>
   );
 };
-
-
-
 
 export default Header;
