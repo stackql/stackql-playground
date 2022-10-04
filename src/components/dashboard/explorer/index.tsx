@@ -1,7 +1,8 @@
 import * as React from "react";
 import TreeView from "@mui/lab/TreeView";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import CloudIcon from "@mui/icons-material/Cloud";
+import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
+import TableViewIcon from "@mui/icons-material/TableView";
 import TreeItem from "@mui/lab/TreeItem";
 import Image from "next/image";
 import { Divider, Drawer, Paper } from "@mui/material";
@@ -10,32 +11,57 @@ interface RenderTree {
   id: string;
   name: string;
   children?: readonly RenderTree[];
+  level: 0 | 1 | 2;
 }
 
 const Explorer = () => {
   const data: RenderTree = {
     id: "root",
     name: "AWS",
+    level: 0,
     children: [
       {
         id: "1",
         name: "Elastic Load Balancer",
+        level: 1,
       },
       {
         id: "3",
         name: "EC2",
+        level: 1,
         children: [
           {
             id: "4",
             name: "Security Groups",
+            level: 2,
           },
         ],
       },
     ],
   };
 
+  const renderLevelIcon = (level: 0 | 1 | 2) => {
+    switch (level) {
+      case 0:
+        return <CloudIcon />;
+        break;
+      case 1:
+        return <MiscellaneousServicesIcon />;
+        break;
+      case 2:
+        return <TableViewIcon />;
+      default:
+        break;
+    }
+  };
+
   const renderTree = (nodes: RenderTree) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
+    <TreeItem
+      key={nodes.id}
+      nodeId={nodes.id}
+      label={nodes.name}
+      icon={renderLevelIcon(nodes.level)}
+    >
       {Array.isArray(nodes.children)
         ? nodes.children.map((node) => renderTree(node))
         : null}
@@ -48,9 +74,9 @@ const Explorer = () => {
       </h2>
       <TreeView
         aria-label="rich object"
-        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultCollapseIcon={<TableViewIcon />}
         defaultExpanded={["root"]}
-        defaultExpandIcon={<ChevronRightIcon />}
+        defaultExpandIcon={<TableViewIcon />}
         className="w-full"
         multiSelect
       >
