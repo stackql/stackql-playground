@@ -3,7 +3,9 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
+import Image from "next/image";
 import { Divider, Drawer, Paper } from "@mui/material";
+
 interface RenderTree {
   id: string;
   name: string;
