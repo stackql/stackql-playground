@@ -23,3 +23,7 @@
 .border-bottom {
   @apply border-b-gray-300 border-b;
 }
+
+.button-primary {
+  @apply text-primary border border-primary bg-white;
+}
