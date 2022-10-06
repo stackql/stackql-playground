@@ -13,3 +13,10 @@ export interface Resource {
   id: string;
   name: string;
 }
+
+export interface RenderTree {
+  id: string;
+  name: string;
+  children?: readonly RenderTree[];
+  level: 0 | 1 | 2;
+}

@@ -4,42 +4,15 @@ import CloudIcon from "@mui/icons-material/Cloud";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import TableViewIcon from "@mui/icons-material/TableView";
 import TreeItem from "@mui/lab/TreeItem";
-import Image from "next/image";
-import { Divider, Drawer, Paper } from "@mui/material";
+import { RenderTree } from "../../../types";
 
-interface RenderTree {
-  id: string;
-  name: string;
-  children?: readonly RenderTree[];
-  level: 0 | 1 | 2;
-}
-
-const Explorer = () => {
-  const data: RenderTree = {
-    id: "root",
-    name: "AWS",
-    level: 0,
-    children: [
-      {
-        id: "1",
-        name: "Elastic Load Balancer",
-        level: 1,
-      },
-      {
-        id: "3",
-        name: "EC2",
-        level: 1,
-        children: [
-          {
-            id: "4",
-            name: "Security Groups",
-            level: 2,
-          },
-        ],
-      },
-    ],
-  };
-
+const Explorer = ({
+  itemTrees,
+  loading,
+}: {
+  itemTrees: RenderTree[] | null;
+  loading: boolean;
+}) => {
   const renderLevelIcon = (level: 0 | 1 | 2) => {
     switch (level) {
       case 0:
@@ -67,11 +40,9 @@ const Explorer = () => {
         : null}
     </TreeItem>
   );
-  return (
-    <div className="w-1/6 flex-col border-right">
-      <h2 className="panel-title text-center bg-gray-100 border-bottom">
-        Explorer
-      </h2>
+
+  const renderTreeView = (itemTree: RenderTree) => {
+    return (
       <TreeView
         aria-label="rich object"
         defaultCollapseIcon={<TableViewIcon />}
@@ -80,8 +51,20 @@ const Explorer = () => {
         className="w-full"
         multiSelect
       >
-        {renderTree(data)}
+        {renderTree(itemTree)}
       </TreeView>
+    );
+  };
+  return (
+    <div className="w-1/6 flex-col border-right">
+      <h2 className="panel-title text-center bg-gray-100 border-bottom">
+        Explorer
+      </h2>
+      {!loading && itemTrees ? (
+        itemTrees.map((itemTree) => renderTreeView(itemTree))
+      ) : (
+        <h6> Loading Resources </h6>
+      )}
     </div>
   );
 };
