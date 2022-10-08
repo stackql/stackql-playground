@@ -19,4 +19,5 @@ export interface RenderTree {
   name: string;
   children?: readonly RenderTree[];
   level: 0 | 1 | 2;
+  path?: string;
 }

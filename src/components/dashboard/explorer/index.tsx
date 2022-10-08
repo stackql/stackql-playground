@@ -16,12 +16,24 @@ const Explorer = ({
   loading: boolean;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedNode, setSelectedNode] = React.useState<null | RenderTree>(
+    null
+  );
+
   const open = Boolean(anchorEl);
-  const handleRightClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleRightClick = (
+    event: React.MouseEvent<HTMLElement>,
+    node: RenderTree
+  ) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
+    setSelectedNode(node);
   };
-  const handleClose = () => {
+  const handleCopy = () => {
+    const node = selectedNode;
+    if (node && node.path) {
+      navigator.clipboard.writeText(node.path);
+    }
     setAnchorEl(null);
   };
   const renderLevelIcon = (level: 0 | 1 | 2) => {
@@ -46,7 +58,7 @@ const Explorer = ({
       label={nodes.name}
       icon={renderLevelIcon(nodes.level)}
       onContextMenu={(event) => {
-        nodes.level === 2 && handleRightClick(event);
+        nodes.level === 2 && handleRightClick(event, nodes);
       }}
     >
       {Array.isArray(nodes.children)
@@ -84,10 +96,10 @@ const Explorer = ({
             }}
             anchorEl={anchorEl}
             open={open}
-            onClose={handleClose}
+            onClose={handleCopy}
             TransitionComponent={Fade}
           >
-            <MenuItem onClick={handleClose}>Copy Resource Name</MenuItem>
+            <MenuItem onClick={handleCopy}>Copy Resource Name</MenuItem>
           </Menu>
         </>
       ) : (

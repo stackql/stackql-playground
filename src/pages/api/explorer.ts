@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Provider, Resource, Service } from "../../types";
+import { Provider, RenderTree, Resource, Service } from "../../types";
 const localMiddlewareUrl = "http://localhost:8080";
 
 const providersUrl = (url: string) => `${url}/providers`;
@@ -32,7 +32,11 @@ export default async function handler(
       serviceWithResource.push({
         ...service,
         level: 1,
-        children: resources.map((resource) => ({ ...resource, level: 2 })),
+        children: resources.map((resource) => ({
+          ...resource,
+          level: 2,
+          path: `${provider.name}.${service.name}.${resource.name}`,
+        })),
       });
     }
     const providerWithService = {
@@ -44,6 +48,6 @@ export default async function handler(
     return providerWithService;
   });
 
-  const entityTree = await Promise.all(entityTreePromises);
+  const entityTree = (await Promise.all(entityTreePromises)) as RenderTree[];
   res.status(200).json(entityTree);
 }

@@ -9,13 +9,16 @@ const QueryPanel = () => {
   );
   return (
     <div className="w-full flex-col h-1/2 border-bottom">
-      <Toolbar variant="dense" className="bg-gray-100 text-black min-h-min border-bottom">
+      <Toolbar
+        variant="dense"
+        className="bg-gray-100 text-black min-h-min border-bottom"
+      >
         <h2 className="panel-title">Query</h2>
       </Toolbar>
       <CodeEditor
         language="sql"
         placeholder="Enter Query"
-        value={`SELECT * FROM "AWS.ec2";`}
+        value={`--- SELECT * FROM "AWS.ec2";`}
         minHeight={300}
         style={{
           fontWeight: 700,
