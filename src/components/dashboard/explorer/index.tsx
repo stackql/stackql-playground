@@ -48,7 +48,7 @@ const Explorer = ({
         defaultCollapseIcon={<TableViewIcon />}
         defaultExpanded={["root"]}
         defaultExpandIcon={<TableViewIcon />}
-        className="w-full"
+        className="w-full overflow-scroll max-h-[95%]"
         multiSelect
       >
         {renderTree(itemTree)}
@@ -56,7 +56,7 @@ const Explorer = ({
     );
   };
   return (
-    <div className="w-1/6 flex-col border-right">
+    <div className="w-1/6 flex-col border-right max-h-full h-full">
       <h2 className="panel-title text-center bg-gray-100 border-bottom">
         Explorer
       </h2>

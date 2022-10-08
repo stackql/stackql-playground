@@ -27,7 +27,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen max-h-full h-full overflow-x-hidden">
       <Explorer itemTrees={itemTrees} loading={isLoading} />
       <div
         aria-label="query and result container"
