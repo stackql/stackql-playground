@@ -5,6 +5,8 @@ import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices
 import TableViewIcon from "@mui/icons-material/TableView";
 import TreeItem from "@mui/lab/TreeItem";
 import { RenderTree } from "../../../types";
+import { Menu, MenuItem } from "@mui/material";
+import Fade from "@mui/material/Fade";
 
 const Explorer = ({
   itemTrees,
@@ -13,6 +15,15 @@ const Explorer = ({
   itemTrees: RenderTree[] | null;
   loading: boolean;
 }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleRightClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const renderLevelIcon = (level: 0 | 1 | 2) => {
     switch (level) {
       case 0:
@@ -34,6 +45,9 @@ const Explorer = ({
       nodeId={nodes.id}
       label={nodes.name}
       icon={renderLevelIcon(nodes.level)}
+      onContextMenu={(event) => {
+        nodes.level === 2 && handleRightClick(event);
+      }}
     >
       {Array.isArray(nodes.children)
         ? nodes.children.map((node) => renderTree(node))
@@ -61,7 +75,21 @@ const Explorer = ({
         Explorer
       </h2>
       {!loading && itemTrees ? (
-        itemTrees.map((itemTree) => renderTreeView(itemTree))
+        <>
+          {itemTrees.map((itemTree) => renderTreeView(itemTree))}
+          <Menu
+            id="fade-menu"
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Fade}
+          >
+            <MenuItem onClick={handleClose}>Copy Resource Name</MenuItem>
+          </Menu>
+        </>
       ) : (
         <h6> Loading Resources </h6>
       )}
