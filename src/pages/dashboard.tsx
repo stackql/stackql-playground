@@ -8,16 +8,17 @@ import { RenderTree } from "../types";
 const Dashboard = () => {
   const [itemTrees, setItemTrees] = useState<RenderTree[] | null>(null);
   const [isLoading, setLoading] = useState(false);
+  const fetchExplorer = async () => {
+    // get the data from the api
+    const response = await fetch("/api/explorer");
+    // convert data to json
+    const data = await response.json();
+    return data;
+  };
 
   useEffect(() => {
     setLoading(true);
-    const fetchExplorer = async () => {
-      // get the data from the api
-      const response = await fetch("/api/explorer");
-      // convert data to json
-      const data = await response.json();
-      return data;
-    };
+
     fetchExplorer()
       .then((data) => {
         setItemTrees(data as RenderTree[]);
