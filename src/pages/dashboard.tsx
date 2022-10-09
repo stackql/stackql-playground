@@ -28,11 +28,15 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex w-screen max-h-full h-full overflow-x-hidden">
+    <div
+      className="flex w-screen max-h-full h-full overflow-x-hidden"
+      key={Math.random()}
+    >
       <Explorer itemTrees={itemTrees} loading={isLoading} />
       <div
         aria-label="query and result container"
         className="flex flex-col w-full justify-between h-full"
+        key={Math.random()}
       >
         <QueryPanel />
         <ResultsPanel />

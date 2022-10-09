@@ -67,7 +67,7 @@ const Explorer = ({
     </TreeItem>
   );
 
-  const renderTreeView = (itemTree: RenderTree) => {
+  const renderTreeView = (itemTree: RenderTree, index: number) => {
     return (
       <TreeView
         aria-label="rich object"
@@ -76,6 +76,7 @@ const Explorer = ({
         defaultExpandIcon={<TableViewIcon />}
         className="w-full overflow-scroll max-h-[95%]"
         multiSelect
+        key={index}
       >
         {renderTree(itemTree)}
       </TreeView>
@@ -88,7 +89,7 @@ const Explorer = ({
       </h2>
       {!loading && itemTrees ? (
         <>
-          {itemTrees.map((itemTree) => renderTreeView(itemTree))}
+          {itemTrees.map((itemTree, index) => renderTreeView(itemTree, index))}
           <Menu
             id="fade-menu"
             MenuListProps={{
