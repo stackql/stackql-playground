@@ -4,16 +4,15 @@ import ResultsPanel from "../components/dashboard/results";
 import Layout from "../components/layout";
 import { ReactElement, useEffect, useState } from "react";
 import { RenderTree } from "../types";
+import fetchData from "../fetch";
 
 const Dashboard = () => {
   const [itemTrees, setItemTrees] = useState<RenderTree[] | null>(null);
   const [isLoading, setLoading] = useState(false);
   const fetchExplorer = async () => {
+    const url = "/api/explorer";
     // get the data from the api
-    const response = await fetch("/api/explorer");
-    // convert data to json
-    const data = await response.json();
-    return data;
+    return await fetchData(url);
   };
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import fetchData from "../../fetch";
 
 interface IQueryContextProps {
   query: string;
@@ -22,7 +23,7 @@ export const QueryContextProvider = ({
 }) => {
   const [query, setEditorQuery] = useState<string>(defaultQuery);
   const [queryRunning, setQueryRunning] = useState<boolean>(true);
-
+  const fetchResultsFromQuery = async () => {};
   return (
     <QueryContext.Provider
       value={{

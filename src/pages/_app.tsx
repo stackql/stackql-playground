@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
 import Head from "next/head";
-import { QueryContextProvider } from "../contexts/queryContext/queryContext";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -24,9 +23,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <title>{title}</title>
       </Head>
-      <QueryContextProvider>
-        <Component {...pageProps} />
-      </QueryContextProvider>
+      <Component {...pageProps} />
     </>
   );
 }

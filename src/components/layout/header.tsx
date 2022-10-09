@@ -10,14 +10,31 @@ import Image from "next/image";
 import React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useQueryContext } from "../../contexts/queryContext/useQueryContext";
 
 const Header = () => {
   const [open, setOpen] = React.useState(false);
+  const { query } = useQueryContext();
   const handleClose = () => {
     setOpen(false);
   };
-  const handleToggle = () => {
-    setOpen(!open);
+  const handleToggle = async () => {
+    const url = "/api/stackql";
+    const body = {
+      inputData: {
+        query: query,
+      },
+    };
+    const request = new Request(url, {
+      body: query,
+      method: "POST",
+    });
+    try {
+      const response = await fetch(request);
+      return await response.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -28,7 +45,9 @@ const Header = () => {
       <div className="w-4/6 flex-col">
         <Stack direction="row" spacing={2}>
           <Button
-            onClick={handleToggle}
+            onClick={async () => {
+              await handleToggle();
+            }}
             variant="outlined"
             className="button-primary"
             startIcon={<PlayCircleFilledWhiteIcon />}
