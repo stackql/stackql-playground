@@ -4,16 +4,21 @@ import fetchData from "../../fetch";
 interface IQueryContextProps {
   query: string;
   queryRunning: boolean;
-  setQuery: (user: any) => void;
+  queryResults?: any;
+  setQuery: (query: any) => void;
   setQueryRunning: (loading: boolean) => void;
+  setQueryResults: (results: any) => void;
 }
 
-const defaultQuery = "-- SELECT * FROM aws.ec2.security_group";
+const defaultQuery = `SELECT name, email, id, type, url
+FROM github.repos.contributors
+where repo = 'stackql-playground' AND owner = 'stackql';`;
 export const QueryContext = React.createContext<IQueryContextProps>({
   query: "",
   queryRunning: false,
   setQuery: () => {},
   setQueryRunning: () => {},
+  setQueryResults: () => {},
 });
 
 export const QueryContextProvider = ({
@@ -22,8 +27,9 @@ export const QueryContextProvider = ({
   children: JSX.Element | JSX.Element[];
 }) => {
   const [query, setEditorQuery] = useState<string>(defaultQuery);
-  const [queryRunning, setQueryRunning] = useState<boolean>(true);
-  const fetchResultsFromQuery = async () => {};
+  const [queryRunning, setQueryRunning] = useState<boolean>(false);
+  const [queryResults, setQueryResults] = useState<any>(undefined);
+
   return (
     <QueryContext.Provider
       value={{
@@ -33,6 +39,8 @@ export const QueryContextProvider = ({
           setEditorQuery(query);
         },
         setQueryRunning,
+        queryResults,
+        setQueryResults,
       }}
     >
       {children}

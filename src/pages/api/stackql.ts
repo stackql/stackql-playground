@@ -11,6 +11,7 @@ export default async function handler(
     query = query.replace(/\s+/g, " ").trim();
     const body = {
       query,
+      showMetadata: true,
     };
     const result = await getDataFromResponse<any>(
       url,
@@ -20,6 +21,6 @@ export default async function handler(
     console.log("result is %o", result);
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ message: error });
   }
 }

@@ -4,12 +4,11 @@ export const getDataFromResponse = async <T>(
   body?: any,
   method = "GET"
 ) => {
-  try {
-    const request = new Request(fetchUrl, { method, body });
-    const response = await fetch(request);
+  const request = new Request(fetchUrl, { method, body });
+  const response = await fetch(request);
+  if (response.ok) {
     const resData = (await response.json()) as { data: T };
     return resData.data;
-  } catch (error) {
-    throw error;
   }
+  throw response.statusText;
 };
