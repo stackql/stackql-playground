@@ -48,7 +48,7 @@ const generateColDef = (row: Object) => {
     colDef.push({
       field: column,
       headerName: column,
-      width: 100,
+      width: 200,
     });
   });
   return colDef;
