@@ -10,14 +10,34 @@ import Image from "next/image";
 import React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useQueryContext } from "../../contexts/queryContext/useQueryContext";
 
 const Header = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleToggle = () => {
-    setOpen(!open);
+  const { query, setQueryResults, setQueryRunning, queryRunning } =
+    useQueryContext();
+
+  const handleToggle = async () => {
+    const url = "/api/stackql";
+    const request = new Request(url, {
+      body: query,
+      method: "POST",
+    });
+    setQueryRunning(true);
+    try {
+      const response = await fetch(request);
+      setQueryRunning(false);
+
+      const resJson = await response.json();
+
+      if (response.status !== 200) {
+        throw resJson;
+      }
+      console.log("result is %o", resJson);
+      setQueryResults(resJson);
+    } catch (error) {
+      console.log("error is %o", error);
+      setQueryRunning(false);
+    }
   };
 
   return (
@@ -28,7 +48,9 @@ const Header = () => {
       <div className="w-4/6 flex-col">
         <Stack direction="row" spacing={2}>
           <Button
-            onClick={handleToggle}
+            onClick={async () => {
+              await handleToggle();
+            }}
             variant="outlined"
             className="button-primary"
             startIcon={<PlayCircleFilledWhiteIcon />}
@@ -39,8 +61,7 @@ const Header = () => {
           <Backdrop
             className="w-screen ml-0"
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}
-            onClick={handleClose}
+            open={queryRunning}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

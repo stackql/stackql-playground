@@ -4,16 +4,15 @@ import ResultsPanel from "../components/dashboard/results";
 import Layout from "../components/layout";
 import { ReactElement, useEffect, useState } from "react";
 import { RenderTree } from "../types";
+import fetchData from "../fetch";
 
 const Dashboard = () => {
   const [itemTrees, setItemTrees] = useState<RenderTree[] | null>(null);
   const [isLoading, setLoading] = useState(false);
   const fetchExplorer = async () => {
+    const url = "/api/explorer";
     // get the data from the api
-    const response = await fetch("/api/explorer");
-    // convert data to json
-    const data = await response.json();
-    return data;
+    return await fetchData(url);
   };
 
   useEffect(() => {
@@ -28,11 +27,15 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex w-screen max-h-full h-full overflow-x-hidden">
+    <div
+      className="flex w-screen max-h-full h-full overflow-x-hidden"
+      key={Math.random()}
+    >
       <Explorer itemTrees={itemTrees} loading={isLoading} />
       <div
         aria-label="query and result container"
         className="flex flex-col w-full justify-between h-full"
+        key={Math.random()}
       >
         <QueryPanel />
         <ResultsPanel />
