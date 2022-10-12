@@ -6,7 +6,7 @@ RUN adduser --system --uid 1001 nextjs
 RUN addgroup --system --gid 1001 nextjs
 COPY --chown=nextjs:nextjs . .
 RUN npm install
-RUN npm build
+RUN npm run build
 USER nextjs
 EXPOSE 3000
 CMD ["dumb-init", "npm", "start"]
