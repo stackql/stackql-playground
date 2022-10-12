@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+jobs:
+  dockerbuild:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          docker build -t stackql-playground .
+
+      - name: Login to Docker Hub
+        if: ${{ success() && github.ref_type == 'branch' && github.ref_name == 'main' && github.repository == 'stackql/stackql-playground' && github.event_name == 'push' }}
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push stackql-playground image to Docker Hub
+        if: ${{ success() && github.ref_type == 'branch' && github.ref_name == 'main' && github.repository == 'stackql/stackql-playground' && github.event_name == 'push' }}
+        run: |
+          docker tag stackql/stackql-playground:latest stackql/stackql-playground:${{github.sha}}
+          docker push stackql/stackql-playground:latest 
+          docker push stackql/stackql-playground:${{github.sha}}
