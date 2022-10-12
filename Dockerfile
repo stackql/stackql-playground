@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends dumb-init
 ENV NODE_ENV production
 WORKDIR /app
 RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nextjs
 COPY --chown=nextjs:nextjs . .
 RUN npm install
 RUN npm ci --only=production
