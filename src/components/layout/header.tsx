@@ -16,8 +16,11 @@ const Header = () => {
   const { query, setQueryResults, setQueryRunning, queryRunning } =
     useQueryContext();
 
-  const handleToggle = async () => {
-    const url = "/api/stackql";
+  const handleToggle = async (dts = false) => {
+    let url = "/api/stackql";
+    if (dts) {
+      url = url + "?dts=true";
+    }
     const request = new Request(url, {
       body: query,
       method: "POST",
@@ -32,10 +35,8 @@ const Header = () => {
       if (response.status !== 200) {
         throw resJson;
       }
-      console.log("result is %o", resJson);
       setQueryResults(resJson);
     } catch (error) {
-      console.log("error is %o", error);
       setQueryRunning(false);
     }
   };
@@ -70,6 +71,9 @@ const Header = () => {
             variant="outlined"
             className="button-primary"
             startIcon={<DataObjectIcon />}
+            onClick={async () => {
+              await handleToggle(true);
+            }}
           >
             Get Types
           </Button>
