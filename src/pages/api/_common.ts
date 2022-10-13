@@ -1,7 +1,7 @@
-const middlewareScheme = process.env.MIDDLEWARE_SCHEME || 'http';
-const middlewareHost = process.env.MIDDLEWARE_HOST || 'localhost';
-const middlewarePort = process.env.MIDDLEWARE_PORT || 8080;
-export const middlewareUrl = `${middlewareScheme}://${middlewareHost}:${middlewarePort.toString()}`;
+const middlewareScheme = process.env.MIDDLEWARE_SCHEME;
+const middlewareHost = process.env.MIDDLEWARE_HOST;
+const middlewarePort = process.env.MIDDLEWARE_PORT;
+export const middlewareUrl = `${middlewareScheme}://${middlewareHost}:${middlewarePort}`;
 export const getDataFromResponse = async <T>(
   fetchUrl: string,
   body?: any,
