@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getDataFromResponse, localMiddlewareUrl } from "./_common";
+import { getDataFromResponse, middlewareUrl } from "./_common";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const url = `${localMiddlewareUrl}/stackql`;
+  const url = `${middlewareUrl}/stackql`;
   try {
     let query = req.body as string;
     query = query.replace(/\s+/g, " ").trim();

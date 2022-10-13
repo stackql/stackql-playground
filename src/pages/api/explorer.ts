@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Provider, RenderTree, Resource, Service } from "../../types";
-import { getDataFromResponse, localMiddlewareUrl } from "./_common";
+import { getDataFromResponse, middlewareUrl } from "./_common";
 
 const providersUrl = (url: string) => `${url}/providers`;
 const getServiceUrl = (url: string, provider: string) =>
@@ -12,7 +12,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const url = localMiddlewareUrl;
+  const url = middlewareUrl;
   const providers = await getDataFromResponse<Provider[]>(providersUrl(url));
 
   const entityTreePromises = providers.map(async (provider, index) => {
