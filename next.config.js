@@ -7,7 +7,7 @@ const nextConfig = {
 
 const removeImports = require("next-remove-imports")();
 module.exports = removeImports({
-  serverRuntimeConfig: {
+  publicRuntimeConfig: {
     middlewareScheme: process.env.MIDDLEWARE_SCHEME || "http",
     middlewareHost: process.env.MIDDLEWARE_HOST || "localhost",
     middlewarePort: process.env.MIDDLEWARE_PORT || "8080",

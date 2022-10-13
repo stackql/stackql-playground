@@ -1,7 +1,7 @@
 import getConfig from 'next/config'
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
-export const middlewareUrl = `${serverRuntimeConfig.middlewareScheme}://${serverRuntimeConfig.middlewareHost}:${serverRuntimeConfig.middlewarePort}`;
+export const middlewareUrl = `${publicRuntimeConfig.middlewareScheme}://${publicRuntimeConfig.middlewareHost}:${publicRuntimeConfig.middlewarePort}`;
 export const getDataFromResponse = async <T>(
   fetchUrl: string,
   body?: any,
