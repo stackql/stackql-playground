@@ -1,7 +1,7 @@
-const middlewareScheme = process.env.MIDDLEWARE_SCHEME;
-const middlewareHost = process.env.MIDDLEWARE_HOST;
-const middlewarePort = process.env.MIDDLEWARE_PORT;
-export const middlewareUrl = `${middlewareScheme}://${middlewareHost}:${middlewarePort}`;
+import getConfig from 'next/config'
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
+export const middlewareUrl = `${serverRuntimeConfig.middlewareScheme}://${serverRuntimeConfig.middlewareHost}:${serverRuntimeConfig.middlewarePort}`;
 export const getDataFromResponse = async <T>(
   fetchUrl: string,
   body?: any,

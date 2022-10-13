@@ -7,6 +7,11 @@ const nextConfig = {
 
 const removeImports = require("next-remove-imports")();
 module.exports = removeImports({
+  serverRuntimeConfig: {
+    middlewareScheme: process.env.MIDDLEWARE_SCHEME,
+    middlewareHost: process.env.MIDDLEWARE_HOST,
+    middlewarePort: process.env.MIDDLEWARE_PORT,
+  },
   experimental: { esmExternals: true },
   ...nextConfig
 });
