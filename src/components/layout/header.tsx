@@ -53,7 +53,7 @@ const Header = () => {
               await handleToggle();
             }}
             variant="outlined"
-            className="button-primary"
+            className="text-primary border border-primary bg-white"
             startIcon={<PlayCircleFilledWhiteIcon />}
           >
             Run Query
@@ -69,7 +69,7 @@ const Header = () => {
 
           <Button
             variant="outlined"
-            className="button-primary"
+            className="text-primary border border-primary bg-white"
             startIcon={<DataObjectIcon />}
             onClick={async () => {
               await handleToggle(true);

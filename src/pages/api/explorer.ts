@@ -13,17 +13,23 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const url = middlewareUrl;
-  const providers = await getDataFromResponse<Provider[]>(providersUrl(url));
+  const providers = (await getDataFromResponse<Provider[]>(
+    providersUrl(url)
+  )) as Provider[];
   console.log("providers are %o", providers);
   const entityTreePromises = providers.map(
     async (provider: { name: string }, index: { toString: () => any }) => {
       const servicesUrl = getServiceUrl(url, provider.name);
-      const services = await getDataFromResponse<Service[]>(servicesUrl);
+      const services = (await getDataFromResponse<Service[]>(
+        servicesUrl
+      )) as Service[];
 
       const serviceWithResource: any[] = [];
       for (const service of services) {
         const resourceUrl = getResourceUrl(url, provider.name, service.name);
-        const resources = await getDataFromResponse<Resource[]>(resourceUrl);
+        const resources = (await getDataFromResponse<Resource[]>(
+          resourceUrl
+        )) as Resource[];
         serviceWithResource.push({
           ...service,
           level: 1,
