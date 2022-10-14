@@ -4,12 +4,16 @@ import fetchData from "../../fetch";
 interface IQueryContextProps {
   query: string;
   queryRunning: boolean;
-  queryResults?: any;
+  queryResults?: { data: any; returnText: boolean };
   setQuery: (query: any) => void;
   setQueryRunning: (loading: boolean) => void;
   setQueryResults: (results: any) => void;
 }
 
+export interface IQueryResult {
+  data: any;
+  returnText: boolean;
+}
 const defaultQuery = `SELECT name, email, id, type, url
 FROM github.repos.contributors
 where repo = 'stackql-playground' AND owner = 'stackql';`;

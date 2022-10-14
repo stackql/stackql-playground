@@ -5,21 +5,27 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const url = `${middlewareUrl}/stackql`;
+  let url = `${middlewareUrl}/stackql`;
+  const queryParams = req.query;
+  let returnText = false;
+  if (queryParams.dts) {
+    url = url + "?dts=";
+    returnText = true;
+  }
   try {
     let query = req.body as string;
     query = query.replace(/\s+/g, " ").trim();
     const body = {
       query,
-      showMetadata: true,
     };
     const result = await getDataFromResponse<any>(
       url,
       JSON.stringify(body),
-      "POST"
+      "POST",
+      returnText
     );
     console.log("result is %o", result);
-    res.status(200).json(result);
+    res.status(200).json({ data: result, returnText });
   } catch (error) {
     res.status(400).json({ message: error });
   }

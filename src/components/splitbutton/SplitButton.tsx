@@ -54,12 +54,12 @@ export default function SplitButton() {
         <Button
           startIcon={<CodeIcon />}
           onClick={handleClick}
-          className="button-primary"
+          className="text-primary border border-primary bg-white"
         >
           {options[selectedIndex]}
         </Button>
         <Button
-          className="button-primary"
+          className="text-primary border border-primary bg-white"
           size="small"
           aria-controls={open ? "split-button-menu" : undefined}
           aria-expanded={open ? "true" : undefined}

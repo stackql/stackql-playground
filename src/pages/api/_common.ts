@@ -1,17 +1,23 @@
-import getConfig from 'next/config'
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+import getConfig from "next/config";
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 export const middlewareUrl = `${publicRuntimeConfig.middlewareScheme}://${publicRuntimeConfig.middlewareHost}:${publicRuntimeConfig.middlewarePort}`;
 export const getDataFromResponse = async <T>(
   fetchUrl: string,
   body?: any,
-  method = "GET"
+  method = "GET",
+  returnText = false
 ) => {
   const request = new Request(fetchUrl, { method, body });
   const response = await fetch(request);
   if (response.ok) {
-    const resData = (await response.json()) as { data: T };
-    return resData.data;
+    let resData;
+    if (returnText) {
+      resData = await response.text();
+    } else {
+      resData = (await response.json()).data as T;
+    }
+    return resData;
   }
   throw response.statusText;
 };
