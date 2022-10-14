@@ -15,5 +15,3 @@ module.exports = removeImports({
   experimental: { esmExternals: true },
   ...nextConfig
 });
-
-//export MIDDLEWARE_SCHEME=http
