@@ -4,23 +4,33 @@ import CloudIcon from "@mui/icons-material/Cloud";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import TableViewIcon from "@mui/icons-material/TableView";
 import TreeItem from "@mui/lab/TreeItem";
-import { RenderTree } from "../../../types";
-import { Menu, MenuItem } from "@mui/material";
+import { ItemLevel, RenderTree } from "../../../types";
+import { CircularProgress, Menu, MenuItem } from "@mui/material";
 import Fade from "@mui/material/Fade";
+import { fetchExplorer } from "../../../fetch";
+import { useEffect, useState } from "react";
+import { populateItemTree } from "./utils";
 
-const Explorer = ({
-  itemTrees,
-  loading,
-}: {
-  itemTrees: RenderTree[] | null;
-  loading: boolean;
-}) => {
+const Explorer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedNode, setSelectedNode] = React.useState<null | RenderTree>(
     null
   );
-
+  const [providers, setProviders] = React.useState<RenderTree[] | null>(null);
+  const [expanded, setExpanded] = useState<string[]>([]);
+  const [isLoading, setLoading] = React.useState(false);
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchExplorer()
+      .then((data) => {
+        setProviders(data as RenderTree[]);
+        setLoading(false);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const handleRightClick = (
     event: React.MouseEvent<HTMLElement>,
     node: RenderTree
@@ -29,6 +39,41 @@ const Explorer = ({
     setAnchorEl(event.currentTarget);
     setSelectedNode(node);
   };
+
+  const updateItemTreeState = (updatedNode: RenderTree) => {
+    const newState = providers!.map((tree) => {
+      // 👇️ if id equals 2 replace object
+      if (tree.id === updatedNode.id) {
+        return updatedNode;
+      }
+
+      // 👇️ otherwise return object as is
+      return tree;
+    });
+
+    setProviders(newState);
+  };
+
+  const handleLeftClick = async (node: RenderTree, rootId: string) => {
+    if (!providers) return;
+    if (
+      node.level < ItemLevel.resource &&
+      (!node.children || !node.children.length)
+    ) {
+      setLoading(true);
+      const children = await fetchExplorer(node.path);
+      const updatedRoot = providers?.find((node) => node.id === rootId);
+      if (updatedRoot) {
+        const updatedTree = populateItemTree(updatedRoot, node, children);
+        updateItemTreeState(updatedTree);
+        setExpanded([...expanded, node.id]);
+      }
+      setLoading(false);
+    } else {
+      setExpanded(expanded.filter((ids) => ids !== node.id));
+    }
+  };
+
   const handleCopy = () => {
     const node = selectedNode;
     if (node && node.path) {
@@ -36,60 +81,58 @@ const Explorer = ({
     }
     setAnchorEl(null);
   };
-  const renderLevelIcon = (level: 0 | 1 | 2) => {
+  const renderLevelIcon = (level: ItemLevel) => {
     switch (level) {
-      case 0:
+      case ItemLevel.provider:
         return <CloudIcon />;
-        break;
-      case 1:
+      case ItemLevel.service:
         return <MiscellaneousServicesIcon />;
-        break;
-      case 2:
+      case ItemLevel.resource:
         return <TableViewIcon />;
       default:
         break;
     }
   };
 
-  const renderTree = (nodes: RenderTree) => (
+  const renderTree = (node: RenderTree, rootId: string) => (
     <TreeItem
-      key={nodes.id}
-      nodeId={nodes.id}
-      label={nodes.name}
-      icon={renderLevelIcon(nodes.level)}
+      key={node.id}
+      nodeId={node.id}
+      label={node.name}
+      icon={renderLevelIcon(node.level)}
       onContextMenu={(event) => {
-        nodes.level === 2 && handleRightClick(event, nodes);
+        node.level === ItemLevel.resource && handleRightClick(event, node);
       }}
+      onClick={() => handleLeftClick(node, rootId)}
+      className="w-full border-0"
     >
-      {Array.isArray(nodes.children)
-        ? nodes.children.map((node) => renderTree(node))
+      {Array.isArray(node.children)
+        ? node.children.map((node) => renderTree(node, rootId))
         : null}
     </TreeItem>
   );
 
-  const renderTreeView = (itemTree: RenderTree, index: number) => {
-    return (
-      <TreeView
-        aria-label="rich object"
-        defaultCollapseIcon={<TableViewIcon />}
-        defaultExpanded={["root"]}
-        defaultExpandIcon={<TableViewIcon />}
-        className="w-full overflow-scroll max-h-[95%]"
-        multiSelect
-        key={index}
-      >
-        {renderTree(itemTree)}
-      </TreeView>
-    );
-  };
   return (
     <div className="w-1/6 flex-col border-right max-h-full h-full">
       <h2 className="panel-title text-center bg-gray-100 border-bottom">
         Explorer
       </h2>
-      {!loading && itemTrees ? (
+      {!isLoading && providers ? (
         <>
-          {itemTrees.map((itemTree, index) => renderTreeView(itemTree, index))}
+          <TreeView
+            aria-label="rich object"
+            defaultCollapseIcon={<TableViewIcon />}
+            defaultExpanded={["root"]}
+            defaultExpandIcon={<TableViewIcon />}
+            className="w-full overflow-x-scroll overflow-y-auto h-[95%]"
+            multiSelect
+            key={0}
+            expanded={expanded}
+          >
+            {providers.map((provider) => {
+              return renderTree(provider, provider.id);
+            })}
+          </TreeView>
           <Menu
             id="fade-menu"
             MenuListProps={{
@@ -104,7 +147,9 @@ const Explorer = ({
           </Menu>
         </>
       ) : (
-        <h6> Loading Resources </h6>
+        <h6>
+          <CircularProgress />
+        </h6>
       )}
     </div>
   );

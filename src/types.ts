@@ -17,7 +17,13 @@ export interface Resource {
 export interface RenderTree {
   id: string;
   name: string;
-  children?: readonly RenderTree[];
-  level: 0 | 1 | 2;
-  path?: string;
+  children?: RenderTree[];
+  level: ItemLevel;
+  path: string;
+}
+
+export enum ItemLevel {
+  provider = 0,
+  service = 1,
+  resource = 2,
 }
