@@ -16,7 +16,7 @@ const Explorer = () => {
   const [selectedNode, setSelectedNode] = React.useState<null | RenderTree>(
     null
   );
-  const [roots, setItemTrees] = React.useState<RenderTree[] | null>(null);
+  const [providers, setProviders] = React.useState<RenderTree[] | null>(null);
   const [expanded, setExpanded] = useState<string[]>([]);
   const [isLoading, setLoading] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -25,7 +25,7 @@ const Explorer = () => {
     setLoading(true);
     fetchExplorer()
       .then((data) => {
-        setItemTrees(data as RenderTree[]);
+        setProviders(data as RenderTree[]);
         setLoading(false);
       })
       .catch((err) => console.error(err));
@@ -41,7 +41,7 @@ const Explorer = () => {
   };
 
   const updateItemTreeState = (updatedNode: RenderTree) => {
-    const newState = roots!.map((tree) => {
+    const newState = providers!.map((tree) => {
       // 👇️ if id equals 2 replace object
       if (tree.id === updatedNode.id) {
         return updatedNode;
@@ -51,18 +51,18 @@ const Explorer = () => {
       return tree;
     });
 
-    setItemTrees(newState);
+    setProviders(newState);
   };
 
   const handleLeftClick = async (node: RenderTree, rootId: string) => {
-    if (!roots) return;
+    if (!providers) return;
     if (
       node.level < ItemLevel.resource &&
       (!node.children || !node.children.length)
     ) {
       setLoading(true);
       const children = await fetchExplorer(node.path);
-      const updatedRoot = roots?.find((node) => node.id === rootId);
+      const updatedRoot = providers?.find((node) => node.id === rootId);
       if (updatedRoot) {
         const updatedTree = populateItemTree(updatedRoot, node, children);
         updateItemTreeState(updatedTree);
@@ -111,30 +111,27 @@ const Explorer = () => {
     </TreeItem>
   );
 
-  const renderTreeView = (root: RenderTree, index: number) => {
-    return (
-      <TreeView
-        aria-label="rich object"
-        defaultCollapseIcon={<TableViewIcon />}
-        defaultExpanded={["root"]}
-        defaultExpandIcon={<TableViewIcon />}
-        className="w-full overflow-scroll max-h-[95%]"
-        multiSelect
-        key={index}
-        expanded={expanded}
-      >
-        {renderTree(root, root.id)}
-      </TreeView>
-    );
-  };
   return (
     <div className="w-1/6 flex-col border-right max-h-full h-full">
       <h2 className="panel-title text-center bg-gray-100 border-bottom">
         Explorer
       </h2>
-      {!isLoading && roots ? (
+      {!isLoading && providers ? (
         <>
-          {roots.map((root, index) => renderTreeView(root, index))}
+          <TreeView
+            aria-label="rich object"
+            defaultCollapseIcon={<TableViewIcon />}
+            defaultExpanded={["root"]}
+            defaultExpandIcon={<TableViewIcon />}
+            className="w-full overflow-scroll h-[95%]"
+            multiSelect
+            key={0}
+            expanded={expanded}
+          >
+            {providers.map((provider) => {
+              return renderTree(provider, provider.id);
+            })}
+          </TreeView>
           <Menu
             id="fade-menu"
             MenuListProps={{
