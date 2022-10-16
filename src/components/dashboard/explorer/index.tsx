@@ -124,7 +124,7 @@ const Explorer = () => {
             defaultCollapseIcon={<TableViewIcon />}
             defaultExpanded={["root"]}
             defaultExpandIcon={<TableViewIcon />}
-            className="w-full overflow-scroll h-[95%]"
+            className="w-full overflow-x-scroll overflow-y-auto h-[95%]"
             multiSelect
             key={0}
             expanded={expanded}
