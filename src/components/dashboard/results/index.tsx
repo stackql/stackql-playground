@@ -19,9 +19,16 @@ const generateColDef = (row: Object) => {
 
 const RenderGrid = (results: any[]) => {
   const columns = generateColDef(results[0]);
+  let rows = results;
+  if (!Object.keys(rows[0]).includes("id")) {
+    rows = rows.map((row, index) => ({
+      ...row,
+      id: index,
+    }));
+  }
   return (
     <DataGrid
-      rows={results}
+      rows={rows}
       columns={columns}
       headerHeight={37}
       rowHeight={37}
