@@ -24,7 +24,6 @@ export default async function handler(
       "POST",
       returnText
     );
-    console.log("result is %o", result);
     res.status(200).json({ data: result, returnText });
   } catch (error) {
     res.status(400).json({ message: error });
