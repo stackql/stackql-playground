@@ -82,9 +82,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const queryParams = req.query;
-
-  const resData = await getResData(queryParams.path as string | undefined);
-  console.log("resData is %o", resData);
-  const entityTree = resData as RenderTree[];
-  res.status(200).json(entityTree);
+  try {
+    const resData = await getResData(queryParams.path as string | undefined);
+    const entityTree = resData as RenderTree[];
+    res.status(200).json(entityTree);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }

@@ -5,7 +5,7 @@ import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices
 import TableViewIcon from "@mui/icons-material/TableView";
 import TreeItem from "@mui/lab/TreeItem";
 import { ItemLevel, RenderTree } from "../../../types";
-import { Menu, MenuItem } from "@mui/material";
+import { CircularProgress, Menu, MenuItem } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import { fetchExplorer } from "../../../fetch";
 import { useEffect, useState } from "react";
@@ -104,6 +104,7 @@ const Explorer = () => {
         node.level === ItemLevel.resource && handleRightClick(event, node);
       }}
       onClick={() => handleLeftClick(node, rootId)}
+      className="w-full border-0"
     >
       {Array.isArray(node.children)
         ? node.children.map((node) => renderTree(node, rootId))
@@ -146,7 +147,9 @@ const Explorer = () => {
           </Menu>
         </>
       ) : (
-        <h6> Loading Resources </h6>
+        <h6>
+          <CircularProgress />
+        </h6>
       )}
     </div>
   );
