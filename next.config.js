@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   staticPageGenerationTimeout: 360,
+  env:{
+    MUI_KEY : process.env.MUI_KEY,
+  }
 }
 
 const removeImports = require("next-remove-imports")();

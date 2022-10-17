@@ -3,6 +3,10 @@ import type { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
 import Head from "next/head";
+import { LicenseInfo } from "@mui/x-license-pro";
+
+const muiKey = process.env.MUI_KEY;
+if (muiKey) LicenseInfo.setLicenseKey(muiKey);
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
