@@ -22,6 +22,7 @@
     "next-remove-imports": "^1.0.7",
     "next-transpile-modules": "^9.0.0",
     "postcss": "^8.4.16",
+    "re-resizable": "^6.9.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.55.0",

@@ -113,7 +113,7 @@ const Explorer = () => {
   );
 
   return (
-    <div className="w-1/6 flex-col border-right max-h-full h-full">
+    <div className="w-full flex-col border-right max-h-full h-full">
       <h2 className="panel-title text-center bg-gray-100 border-bottom">
         Explorer
       </h2>
