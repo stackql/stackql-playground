@@ -6,7 +6,7 @@ import QueryEditor from "./query-editor";
 
 const QueryPanel = () => {
   return (
-    <div className="w-full flex-col h-1/2 border-bottom" key={Math.random()}>
+    <div className="w-full h-full flex-col border-bottom" key={Math.random()}>
       <Toolbar
         variant="dense"
         className="bg-gray-100 text-black min-h-min border-bottom"
