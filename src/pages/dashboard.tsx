@@ -20,12 +20,22 @@ const Dashboard = () => {
         }}
         maxWidth="100%"
         minWidth="1"
+        enable={{
+          top: false,
+          right: true,
+          bottom: false,
+          left: false,
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
       >
         <Explorer />
       </Resizable>
       <div
         aria-label="query and result container"
-        className="flex flex-col w-full h-full"
+        className="flex flex-col w-full  h-full"
         key={Math.random()}
       >
         <Resizable
@@ -34,6 +44,16 @@ const Dashboard = () => {
             height: "50%",
           }}
           minHeight={"10%"}
+          enable={{
+            top: false,
+            right: false,
+            bottom: true,
+            left: false,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false,
+          }}
         >
           <QueryPanel />
         </Resizable>
