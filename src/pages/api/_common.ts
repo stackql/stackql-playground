@@ -10,14 +10,15 @@ export const getDataFromResponse = async <T>(
 ) => {
   const request = new Request(fetchUrl, { method, body });
   const response = await fetch(request);
-  if (response.ok) {
-    let resData;
-    if (returnText) {
-      resData = await response.text();
-    } else {
-      resData = (await response.json()).data as T;
-    }
-    return resData;
+  let resData;
+
+  if (returnText) {
+    resData = await response.text();
+  } else {
+    resData = await response.json();
   }
-  throw response.statusText;
+  if (response.ok) {
+    return resData.data as T;
+  }
+  throw resData;
 };
