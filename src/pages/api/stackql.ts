@@ -26,6 +26,6 @@ export default async function handler(
     );
     res.status(200).json({ data: result, returnText });
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json(error);
   }
 }
