@@ -1,5 +1,6 @@
 import * as React from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGridPro, GridColDef } from "@mui/x-data-grid-pro";
+
 import { useQueryContext } from "../../../contexts/queryContext/useQueryContext";
 import Editor from "../../editor";
 import { IQueryResult } from "../../../contexts/queryContext/queryContext";
@@ -27,7 +28,7 @@ const RenderGrid = (results: any[]) => {
     }));
   }
   return (
-    <DataGrid
+    <DataGridPro
       rows={rows}
       columns={columns}
       headerHeight={37}
