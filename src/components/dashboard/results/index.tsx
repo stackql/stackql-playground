@@ -56,9 +56,9 @@ const RenderQueryResult = (queryResult: IQueryResult) => {
 export default function ResultsPanel() {
   const { queryResults } = useQueryContext();
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full w-full flex-col">
       <h2 className="panel-title pl-2 bg-gray-100 border-bottom">Results</h2>
-      <div className="w-full h-[90%] rounded-sm bg-gray-50 px-4 shadow-sm">
+      <div className="w-full h-[90%] rounded-sm bg-gray-50 shadow-sm">
         {queryResults && RenderQueryResult(queryResults)}
       </div>
     </div>

@@ -57,7 +57,9 @@ const Dashboard = () => {
         >
           <QueryPanel />
         </Resizable>
-        <ResultsPanel />
+        <div className="min-h-[10%] h-full">
+          <ResultsPanel />
+        </div>
       </div>
     </div>
   );
