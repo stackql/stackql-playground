@@ -24,7 +24,9 @@ export default async function handler(
       "POST",
       returnText
     );
-    res.status(200).json({ data: result, returnText });
+    res
+      .status(200)
+      .json({ data: returnText ? result : result.data, returnText });
   } catch (error) {
     res.status(400).json(error);
   }
