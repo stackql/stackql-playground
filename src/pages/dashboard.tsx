@@ -10,7 +10,7 @@ import { Resizable } from "re-resizable";
 const Dashboard = () => {
   return (
     <div
-      className="flex w-screen max-h-full h-full overflow-x-hidden"
+      className="flex w-screen max-h-full h-full overflow-hidden"
       key={Math.random()}
     >
       <Resizable

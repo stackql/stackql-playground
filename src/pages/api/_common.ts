@@ -10,8 +10,6 @@ export const getDataFromResponse = async <T>(
 ) => {
   const request = new Request(fetchUrl, { method, body });
   const response = await fetch(request);
-  let resData;
-
   if (!returnText && response.ok) {
     return response.json();
   }

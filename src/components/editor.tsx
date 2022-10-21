@@ -21,7 +21,7 @@ const Editor = ({
       language={language}
       onChange={onChange}
       padding={15}
-      className="w-full"
+      className="w-full overflow-auto h-full max-h-full"
       style={{
         fontWeight: 700,
         fontSize: 14,

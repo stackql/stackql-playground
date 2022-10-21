@@ -6,11 +6,7 @@ const QueryEditor = () => {
   const { query, setQuery } = useQueryContext();
   const onChange = (env: ChangeEvent<HTMLTextAreaElement>) =>
     setQuery(env.target.value);
-  return (
-    <div>
-      <Editor text={query} language="sql" onChange={onChange} />
-    </div>
-  );
+  return <Editor text={query} language="sql" onChange={onChange} />;
 };
 
 export default QueryEditor;
