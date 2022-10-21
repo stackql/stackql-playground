@@ -25,9 +25,8 @@ const readItemPath = (path?: string) => {
 const getProviders = async () => {
   const providersUrl = (url: string) => `${url}/providers`;
 
-  const providers = (await getDataFromResponse<Provider[]>(
-    providersUrl(getUrl())
-  )) as Provider[];
+  const providers = (await getDataFromResponse(providersUrl(getUrl())))
+    .data as Provider[];
   return providers.map((provider, index) => ({
     ...provider,
     level: ItemLevel.provider,
@@ -40,9 +39,7 @@ const getServices = async (providerName: string) => {
   const getServiceUrl = (url: string, provider: string) =>
     `${url}/providers/${provider}/services`;
   const servicesUrl = getServiceUrl(getUrl(), providerName);
-  const services = (await getDataFromResponse<Service[]>(
-    servicesUrl
-  )) as Service[];
+  const services = (await getDataFromResponse(servicesUrl)).data as Service[];
   return services.map((service, index) => ({
     ...service,
     id: providerName + index.toString(),
@@ -55,9 +52,7 @@ const getResource = async (providerName: string, serviceName: string) => {
   const getResourceUrl = (url: string, provider: string, service: string) =>
     `${url}/providers/${provider}/services/${service}/resources`;
   const resourceUrl = getResourceUrl(getUrl(), providerName, serviceName);
-  const resources = (await getDataFromResponse<Resource[]>(
-    resourceUrl
-  )) as Resource[];
+  const resources = (await getDataFromResponse(resourceUrl)).data as Resource[];
   return resources.map((resource, index) => ({
     ...resource,
     id: providerName + serviceName + index.toString(),
