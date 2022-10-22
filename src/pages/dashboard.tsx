@@ -2,9 +2,7 @@ import Explorer from "../components/dashboard/explorer";
 import QueryPanel from "../components/dashboard/query";
 import ResultsPanel from "../components/dashboard/results";
 import Layout from "../components/layout";
-import { ReactElement, useEffect, useState } from "react";
-import { RenderTree } from "../types";
-import fetchData, { fetchExplorer } from "../fetch";
+import { ReactElement } from "react";
 import { Resizable } from "re-resizable";
 
 const Dashboard = () => {

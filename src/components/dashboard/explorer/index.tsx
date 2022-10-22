@@ -69,8 +69,10 @@ const Explorer = () => {
         setExpanded([...expanded, node.id]);
       }
       setLoading(false);
-    } else {
+    } else if (expanded.includes(node.id)) {
       setExpanded(expanded.filter((ids) => ids !== node.id));
+    } else {
+      setExpanded([...expanded, node.id]);
     }
   };
 

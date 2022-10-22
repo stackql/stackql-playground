@@ -17,26 +17,6 @@ export interface IQueryResult {
 const defaultQuery = `SELECT *
 FROM github.repos.contributors
 where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
-FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';
 
 `;
 export const QueryContext = React.createContext<IQueryContextProps>({
