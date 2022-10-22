@@ -1,5 +1,6 @@
 import { ItemLevel, RenderTree } from "../../../types";
 
+//TODO: Clean up the populateItemTree
 export const populateItemTree = (
   root: RenderTree,
   updateNode: RenderTree,
@@ -20,6 +21,20 @@ export const populateItemTree = (
       if (service.path === updateNode.path) {
         service.children = newChildren;
       }
+      return service;
+    });
+  }
+  if (
+    updateNode.path.startsWith(rootClone.path) &&
+    updateNode.level === ItemLevel.resource
+  ) {
+    rootClone.children?.map((service) => {
+      service.children?.map((resource) => {
+        if (resource.path === updateNode.path) {
+          resource.children = newChildren;
+        }
+        return resource;
+      });
       return service;
     });
   }

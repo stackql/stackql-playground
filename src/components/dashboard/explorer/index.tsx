@@ -3,6 +3,8 @@ import TreeView from "@mui/lab/TreeView";
 import CloudIcon from "@mui/icons-material/Cloud";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import TableViewIcon from "@mui/icons-material/TableView";
+import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
+import HorizontalSplitOutlinedIcon from "@mui/icons-material/HorizontalSplitOutlined";
 import TreeItem from "@mui/lab/TreeItem";
 import { ItemLevel, RenderTree } from "../../../types";
 import { CircularProgress, Menu, MenuItem } from "@mui/material";
@@ -55,24 +57,34 @@ const Explorer = () => {
   };
 
   const handleLeftClick = async (node: RenderTree, rootId: string) => {
+    const nodeExpanded = () => expanded.includes(node.id);
+    const collapseNode = () => {
+      setExpanded(expanded.filter((ids) => ids !== node.id));
+    };
+    const expandNode = () => {
+      setExpanded([...expanded, node.id]);
+    };
+    const nodeChildrenNotLoad =
+      node.level < ItemLevel.subResourceItem &&
+      (!node.children || !node.children.length);
+
     if (!providers) return;
-    if (
-      node.level < ItemLevel.resource &&
-      (!node.children || !node.children.length)
-    ) {
+    if (nodeChildrenNotLoad) {
       setLoading(true);
+      //Need to also get methods when populating resources
       const children = await fetchExplorer(node.path);
       const updatedRoot = providers?.find((node) => node.id === rootId);
       if (updatedRoot) {
         const updatedTree = populateItemTree(updatedRoot, node, children);
+        console.log("updatedTree is %o", updatedTree);
         updateItemTreeState(updatedTree);
-        setExpanded([...expanded, node.id]);
+        expandNode();
       }
       setLoading(false);
-    } else if (expanded.includes(node.id)) {
-      setExpanded(expanded.filter((ids) => ids !== node.id));
+    } else if (nodeExpanded()) {
+      collapseNode();
     } else {
-      setExpanded([...expanded, node.id]);
+      expandNode();
     }
   };
 
@@ -91,6 +103,10 @@ const Explorer = () => {
         return <MiscellaneousServicesIcon />;
       case ItemLevel.resource:
         return <TableViewIcon />;
+      case ItemLevel.subResourceKey:
+        return <ViewColumnOutlinedIcon />;
+      case ItemLevel.subResourceItem:
+        return <HorizontalSplitOutlinedIcon />;
       default:
         break;
     }
