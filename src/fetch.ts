@@ -9,7 +9,7 @@ export const fetchExplorer = async (path?: string) => {
     url = url + `?path=${path}`;
   }
   // get the data from the api
-  return await fetchData(url);
+  return fetchData(url);
 };
 
 export default fetchData;

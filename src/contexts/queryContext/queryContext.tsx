@@ -14,9 +14,11 @@ export interface IQueryResult {
   data: any;
   returnText: boolean;
 }
-const defaultQuery = `SELECT name, email, id, type, url
+const defaultQuery = `SELECT *
 FROM github.repos.contributors
-where repo = 'stackql-playground' AND owner = 'stackql';`;
+where repo = 'stackql-playground' AND owner = 'stackql';SELECT name, email, id, type, url
+
+`;
 export const QueryContext = React.createContext<IQueryContextProps>({
   query: "",
   queryRunning: false,

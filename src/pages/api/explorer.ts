@@ -24,9 +24,8 @@ const readItemPath = (path?: string) => {
 
 const getProviders = async () => {
   const providersUrl = (url: string) => `${url}/providers`;
-
-  const providers = (await getDataFromResponse(providersUrl(getUrl())))
-    .data as Provider[];
+  const response = await getDataFromResponse(providersUrl(getUrl()));
+  const providers = response.data as Provider[];
   return providers.map((provider, index) => ({
     ...provider,
     level: ItemLevel.provider,

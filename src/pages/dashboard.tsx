@@ -2,15 +2,13 @@ import Explorer from "../components/dashboard/explorer";
 import QueryPanel from "../components/dashboard/query";
 import ResultsPanel from "../components/dashboard/results";
 import Layout from "../components/layout";
-import { ReactElement, useEffect, useState } from "react";
-import { RenderTree } from "../types";
-import fetchData, { fetchExplorer } from "../fetch";
+import { ReactElement } from "react";
 import { Resizable } from "re-resizable";
 
 const Dashboard = () => {
   return (
     <div
-      className="flex w-screen max-h-full h-full overflow-x-hidden"
+      className="flex w-screen max-h-full h-full overflow-hidden"
       key={Math.random()}
     >
       <Resizable
@@ -57,7 +55,9 @@ const Dashboard = () => {
         >
           <QueryPanel />
         </Resizable>
-        <ResultsPanel />
+        <div className="min-h-[10%] h-full">
+          <ResultsPanel />
+        </div>
       </div>
     </div>
   );
