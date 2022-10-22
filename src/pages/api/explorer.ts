@@ -4,7 +4,9 @@ import {
   Provider,
   RenderTree,
   Resource,
+  ResourceMethod,
   Service,
+  SubResourceItemKey,
 } from "../../types";
 import { getDataFromResponse, middlewareUrl } from "./_common";
 
@@ -19,6 +21,31 @@ const readItemPath = (path?: string) => {
     provider,
     service,
     resource,
+  };
+};
+
+const createSubResourceNode = async ({
+  provider,
+  service,
+  resource,
+  itemKey,
+}: {
+  provider: string;
+  service: string;
+  resource: string;
+  itemKey: SubResourceItemKey;
+}): Promise<RenderTree> => {
+  return {
+    id: provider + service + resource + itemKey,
+    path: `${provider}.${service}.${resource}.${itemKey}`,
+    name: itemKey,
+    level: ItemLevel.subResourceKey,
+    children: await getSubResourceItem({
+      providerName: provider,
+      serviceName: service,
+      resourceName: resource,
+      itemKey,
+    }),
   };
 };
 
@@ -59,14 +86,69 @@ const getResource = async (providerName: string, serviceName: string) => {
     level: ItemLevel.resource,
   }));
 };
+const getSubResourceItem = async ({
+  providerName,
+  serviceName,
+  resourceName,
+  itemKey,
+}: {
+  providerName: string;
+  serviceName: string;
+  resourceName: string;
+  itemKey: SubResourceItemKey;
+}) => {
+  const getFieldsUrl = (
+    url: string,
+    provider: string,
+    service: string,
+    resourceName: string
+  ) =>
+    `${url}/providers/${provider}/services/${service}/resources/${resourceName}`;
+  const getMethodsUrl = (fieldsUrl: string) => fieldsUrl + "/methods";
+
+  let itemUrl = getFieldsUrl(getUrl(), providerName, serviceName, resourceName);
+  let nameMapper = (item: any) => item.name;
+
+  if (itemKey === "methods") {
+    itemUrl = getMethodsUrl(itemUrl);
+    nameMapper = (item: any) => item.MethodName;
+  }
+
+  const items = (await getDataFromResponse(itemUrl)).data as RenderTree[];
+  return items.map((item: RenderTree, index: number) => {
+    return {
+      ...item,
+      id:
+        providerName + serviceName + resourceName + itemKey + index.toString(),
+      path: `${providerName}.${serviceName}.${resourceName}.${itemKey}.${item.name}`,
+      level: ItemLevel.subResourceItem,
+      name: nameMapper(item),
+    };
+  });
+};
 
 const getResData = async (path: string | undefined) => {
-  const { provider, service } = readItemPath(path);
+  const { provider, service, resource } = readItemPath(path);
   if (provider && !service) {
     return await getServices(provider);
   }
-  if (provider && service) {
+  if (provider && service && !resource) {
     return await getResource(provider, service);
+  }
+  if (provider && service && resource) {
+    const fieldTree: RenderTree = await createSubResourceNode({
+      provider,
+      service,
+      resource,
+      itemKey: "fields",
+    });
+    const methodTree: RenderTree = await createSubResourceNode({
+      provider,
+      service,
+      resource,
+      itemKey: "methods",
+    });
+    return [fieldTree, methodTree];
   }
   return await getProviders();
 };
