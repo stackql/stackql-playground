@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import fetchData from "../../fetch";
+import { QueryMetadata } from "../../types";
 
 interface IQueryContextProps {
   query: string;
   queryRunning: boolean;
-  queryResults?: { data: any; returnText: boolean };
+  queryResults?: { data: any; returnText: boolean; metadata: QueryMetadata };
   setQuery: (query: any) => void;
   setQueryRunning: (loading: boolean) => void;
   setQueryResults: (results: any) => void;

@@ -40,4 +40,18 @@ export enum ItemLevel {
   subResourceItem = 4,
 }
 
+export interface QueryMetadata {
+  operation: {
+    startTime: string;
+    status: string;
+    endTime: string;
+    duration: string;
+  };
+  result: {
+    rowCount: number;
+  };
+  request: {
+    query: string;
+  };
+}
 export type SubResourceItemKey = "methods" | "fields";

@@ -8,8 +8,9 @@ export default async function handler(
   let url = `${middlewareUrl}/stackql`;
   const queryParams = req.query;
   let returnText = false;
+  url = url + "?showMetadata=";
   if (queryParams.dts) {
-    url = url + "?dts=";
+    url = url + "&dts=";
     returnText = true;
   }
   try {
@@ -24,9 +25,11 @@ export default async function handler(
       "POST",
       returnText
     );
-    res
-      .status(200)
-      .json({ data: returnText ? result : result.data, returnText });
+    res.status(200).json({
+      data: returnText ? result : result.data,
+      returnText,
+      metadata: result.metadata,
+    });
   } catch (error) {
     res.status(400).json(error);
   }
