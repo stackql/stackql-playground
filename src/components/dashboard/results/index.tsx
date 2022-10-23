@@ -6,6 +6,7 @@ import Editor from "../../editor";
 import { IQueryResult } from "../../../contexts/queryContext/queryContext";
 import { Tab, Tabs } from "@mui/material";
 import { QueryMetadata } from "../../../types";
+import { CopyButton } from "../../copy-button/CopyButton";
 
 const generateColDef = (row: Object) => {
   // { field: "id", headerName: "ID", width: 70 },
@@ -45,7 +46,12 @@ const RenderGrid = (results: any[]) => {
 };
 
 const RenderText = (result: string, language = "js") => {
-  return <Editor text={result} language={language} />;
+  return (
+    <>
+      <CopyButton copyText={result} />
+      <Editor text={result} language={language} />{" "}
+    </>
+  );
 };
 
 const RenderQueryResult = (queryResult: IQueryResult) => {
@@ -74,7 +80,7 @@ const TabPanel = ({
   return (
     <>
       {value === index && (
-        <div className="w-full h-[90%] rounded-sm bg-gray-50 shadow-sm">
+        <div className="w-full h-[90%] rounded-sm bg-gray-50 shadow-sm relative">
           {children}
         </div>
       )}
