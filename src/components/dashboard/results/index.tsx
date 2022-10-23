@@ -49,7 +49,6 @@ const RenderText = (result: string, language = "js") => {
 };
 
 const RenderQueryResult = (queryResult: IQueryResult) => {
-  console.log("queryResult is %o", queryResult);
   if (queryResult.returnText) {
     return RenderText(queryResult.data);
   }
