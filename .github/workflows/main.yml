@@ -9,8 +9,8 @@ jobs:
   build-and-push-docker-image:
     name: Build Docker image and push to repositories
     runs-on: ubuntu-latest
-    env:
-      MUI_KEY: ${{ secrets.MUI_KEY }}
+    # env:
+    #   MUI_KEY: ${{ secrets.MUI_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,9 +32,10 @@ jobs:
           tags: |
             stackql/stackql-playground:latest
             stackql/stackql-playground:${{github.sha}}
+          build-args: |
+            "MUI_KEY=${{ secrets.MUI_KEY }}"
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
-
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
