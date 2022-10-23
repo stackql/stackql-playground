@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import fetchData from "../../fetch";
 import { QueryMetadata } from "../../types";
 
 interface IQueryContextProps {
