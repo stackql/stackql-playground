@@ -27,3 +27,18 @@ export enum ItemLevel {
   service = 1,
   resource = 2,
 }
+
+export interface QueryMetadata {
+  operation: {
+    startTime: string;
+    status: string;
+    endTime: string;
+    duration: string;
+  };
+  result: {
+    rowCount: number;
+  };
+  request: {
+    query: string;
+  };
+}
