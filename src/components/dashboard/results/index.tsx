@@ -121,6 +121,9 @@ export default function ResultsPanel() {
     if (queryResults && value === -1) {
       setValue(0);
     }
+    if (queryResults?.returnText && value > 0) {
+      setValue(0);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryResults]);
 
@@ -149,7 +152,7 @@ export default function ResultsPanel() {
         <Tab
           label="Execution Details"
           className="text-gray-500"
-          disabled={!queryResults}
+          disabled={!queryResults || queryResults?.returnText}
         />
       </Tabs>
       <TabPanel index={0} value={value}>
