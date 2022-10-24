@@ -5,7 +5,7 @@ import DataObjectIcon from "@mui/icons-material/DataObject";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
 import "../../styles/Home.module.css";
-import SplitButton from "../splitbutton/SplitButton";
+import SaveButton from "../splitbutton/SaveButton";
 import Image from "next/image";
 import React from "react";
 import Backdrop from "@mui/material/Backdrop";
@@ -105,7 +105,7 @@ const Header = () => {
             >
               Get Types
             </Button>
-            <SplitButton />
+            {/* <SplitButton /> */}
           </Stack>
         </div>
         <div className="w-1/6 flex-col mr-10">
