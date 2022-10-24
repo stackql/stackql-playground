@@ -1,4 +1,3 @@
-import * as React from "react";
 import { DataGridPro, GridColDef } from "@mui/x-data-grid-pro";
 
 import { useQueryContext } from "../../../contexts/queryContext/useQueryContext";
@@ -7,6 +6,11 @@ import { IQueryResult } from "../../../contexts/queryContext/queryContext";
 import { Tab, Tabs } from "@mui/material";
 import { QueryMetadata } from "../../../types";
 import { CopyButton } from "../../copy-button/CopyButton";
+import SaveButton from "../../splitbutton/SaveButton";
+import SimCardDownloadOutlinedIcon from "@mui/icons-material/SimCardDownloadOutlined";
+import json2csv from "json2csv";
+import React from "react";
+import { CSVLink } from "react-csv";
 
 const generateColDef = (row: Object) => {
   // { field: "id", headerName: "ID", width: 70 },
@@ -115,6 +119,17 @@ const Metadata = ({ metadata }: { metadata: QueryMetadata }) => {
   );
 };
 
+const exportData = (data: []) => {
+  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+    JSON.stringify(data)
+  )}`;
+  const link = document.createElement("a");
+  link.href = jsonString;
+  link.download = "data.json";
+
+  link.click();
+};
+
 export default function ResultsPanel() {
   const { queryResults } = useQueryContext();
   const [value, setValue] = React.useState(-1);
@@ -131,10 +146,37 @@ export default function ResultsPanel() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryResults]);
-
+  const resultOptions = [
+    {
+      name: "Save result as CSV",
+      element: (
+        <>
+          {queryResults && (
+            <CSVLink data={queryResults.data} filename={"data.csv"}>
+              Save result as CSV
+            </CSVLink>
+          )}
+        </>
+      ),
+    },
+    {
+      name: "Save result as JSON",
+      action: () => {
+        exportData(queryResults?.data);
+      },
+    },
+  ];
   return (
     <div className="flex h-full w-full flex-col">
-      <h2 className="panel-title pl-2 bg-gray-100 border-bottom">Results</h2>
+      <div className="flex bg-gray-100 border-bottom justify-between w-full pr-2">
+        <h2 className="panel-title pl-2 w-1/5">Results</h2>
+        <SaveButton
+          options={resultOptions}
+          buttonText="Save Results"
+          startIcon={<SimCardDownloadOutlinedIcon />}
+          disable={!queryResults || queryResults?.returnText}
+        />
+      </div>
       <Tabs
         value={value}
         onChange={handleChange}
