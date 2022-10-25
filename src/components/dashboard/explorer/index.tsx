@@ -21,7 +21,7 @@ const Explorer = () => {
   const [providers, setProviders] = React.useState<RenderTree[] | null>(null);
   const [expanded, setExpanded] = useState<string[]>([]);
   const [isLoading, setLoading] = React.useState(false);
-  const open = Boolean(anchorEl);
+  const rightClickMenu = Boolean(anchorEl);
 
   useEffect(() => {
     setLoading(true);
@@ -157,7 +157,7 @@ const Explorer = () => {
               "aria-labelledby": "fade-button",
             }}
             anchorEl={anchorEl}
-            open={open}
+            open={rightClickMenu}
             onClose={handleCopy}
             TransitionComponent={Fade}
           >
