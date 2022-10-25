@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import Editor from "../../editor";
 
 export interface SimpleDialogProps {
@@ -15,6 +15,15 @@ export const SimpleDialog = (props: SimpleDialogProps) => {
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{title}</DialogTitle>
       <Editor text={value} language={"json"} />
+      <DialogActions>
+        <Button
+          className="text-primary text-center border-primary"
+          variant="outlined"
+          onClick={handleClose}
+        >
+          Done
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };
