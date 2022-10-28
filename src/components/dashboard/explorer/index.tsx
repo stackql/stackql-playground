@@ -29,14 +29,16 @@ const Explorer = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchExplorer(serverUrl)
+    fetchExplorer({ serverUrl })
       .then((data) => {
         setProviders(data as RenderTree[]);
-        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
         setError(err.message || err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [serverUrl]);
 
@@ -77,7 +79,7 @@ const Explorer = () => {
     if (nodeChildrenNotLoad) {
       setLoading(true);
       //Need to also get methods when populating resources
-      const children = await fetchExplorer(node.path);
+      const children = await fetchExplorer({ path: node.path, serverUrl });
       const updatedRoot = providers?.find((node) => node.id === rootId);
       if (updatedRoot) {
         const updatedTree = populateItemTree(updatedRoot, node, children);

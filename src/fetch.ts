@@ -6,12 +6,25 @@ const fetchData = async (url: string) => {
   else throw data;
 };
 
-export const fetchExplorer = async (path?: string, serverUrl?: string) => {
+export const fetchExplorer = async ({
+  path,
+  serverUrl,
+}: {
+  path?: string;
+  serverUrl?: string;
+}) => {
   let url = "/api/explorer";
+  const params: string[] = [];
+  if (serverUrl) {
+    params.push(`serverUrl=${serverUrl}`);
+  }
   if (path) {
-    url = url + `?path=${path}`;
+    params.push(`path=${path}`);
   }
   // get the data from the api
+  if (params.length) {
+    url = `${url}?${params.join("&")}`;
+  }
   return fetchData(url);
 };
 

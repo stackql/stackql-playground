@@ -56,13 +56,13 @@ export const DialogButton = ({
         <DialogActions>
           <Button
             className="text-primary text-center border-primary"
-            variant="outlined"
             onClick={handleClose}
           >
             Cancel
           </Button>
           <Button
             className="text-primary text-center border-primary"
+            variant="outlined"
             onClick={handleSubmit}
           >
             Submit

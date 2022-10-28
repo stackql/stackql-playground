@@ -5,7 +5,7 @@ import { primaryColorHex } from "../../types";
 import { DialogButton } from "../dialog-button";
 
 export const AddUrlButton = () => {
-  const { setServerUrl } = useQueryContext();
+  const { setServerUrl, serverUrl } = useQueryContext();
   const [inputText, setInputText] = useState<string>("");
   const title = "Connect to StackQL Server";
   const handleSubmit = () => {
@@ -16,8 +16,9 @@ export const AddUrlButton = () => {
       autoFocus
       margin="dense"
       id="name"
-      placeholder="https://"
+      placeholder={serverUrl || "https://"}
       type="url"
+      defaultValue={serverUrl}
       fullWidth
       onChange={(event) => {
         setInputText(event.target.value);
