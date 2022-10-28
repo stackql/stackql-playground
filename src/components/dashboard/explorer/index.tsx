@@ -12,26 +12,35 @@ import Fade from "@mui/material/Fade";
 import { fetchExplorer } from "../../../fetch";
 import { useEffect, useState } from "react";
 import { populateItemTree } from "./utils";
+import { useQueryContext } from "../../../contexts/queryContext/useQueryContext";
+import { AlertMessage } from "../../layout/alert";
 
 const Explorer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedNode, setSelectedNode] = React.useState<null | RenderTree>(
     null
   );
-  const [providers, setProviders] = React.useState<RenderTree[] | null>(null);
+  const [providers, setProviders] = useState<RenderTree[] | null>(null);
   const [expanded, setExpanded] = useState<string[]>([]);
-  const [isLoading, setLoading] = React.useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
   const rightClickMenu = Boolean(anchorEl);
+  const { serverUrl } = useQueryContext();
 
   useEffect(() => {
     setLoading(true);
-    fetchExplorer()
+    fetchExplorer({ serverUrl })
       .then((data) => {
         setProviders(data as RenderTree[]);
-        setLoading(false);
       })
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => {
+        console.error(err);
+        setError(err.message || err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [serverUrl]);
 
   const handleRightClick = (
     event: React.MouseEvent<HTMLElement>,
@@ -44,12 +53,10 @@ const Explorer = () => {
 
   const updateItemTreeState = (updatedNode: RenderTree) => {
     const newState = providers!.map((tree) => {
-      // 👇️ if id equals 2 replace object
       if (tree.id === updatedNode.id) {
         return updatedNode;
       }
 
-      // 👇️ otherwise return object as is
       return tree;
     });
 
@@ -72,7 +79,7 @@ const Explorer = () => {
     if (nodeChildrenNotLoad) {
       setLoading(true);
       //Need to also get methods when populating resources
-      const children = await fetchExplorer(node.path);
+      const children = await fetchExplorer({ path: node.path, serverUrl });
       const updatedRoot = providers?.find((node) => node.id === rootId);
       if (updatedRoot) {
         const updatedTree = populateItemTree(updatedRoot, node, children);
@@ -129,47 +136,58 @@ const Explorer = () => {
         : null}
     </TreeItem>
   );
-
+  const providerFetched = providers && providers.length;
   return (
-    <div className="w-full flex-col border-right max-h-full h-full">
-      <h2 className="panel-title text-center bg-gray-100 border-bottom">
-        Explorer
-      </h2>
-      {!isLoading && providers ? (
-        <>
-          <TreeView
-            aria-label="rich object"
-            defaultCollapseIcon={<TableViewIcon />}
-            defaultExpanded={["root"]}
-            defaultExpandIcon={<TableViewIcon />}
-            className="w-full overflow-x-scroll overflow-y-auto h-[95%]"
-            multiSelect
-            key={0}
-            expanded={expanded}
-          >
-            {providers.map((provider) => {
-              return renderTree(provider, provider.id);
-            })}
-          </TreeView>
-          <Menu
-            id="fade-menu"
-            MenuListProps={{
-              "aria-labelledby": "fade-button",
-            }}
-            anchorEl={anchorEl}
-            open={rightClickMenu}
-            onClose={handleCopy}
-            TransitionComponent={Fade}
-          >
-            <MenuItem onClick={handleCopy}>Copy Resource Name</MenuItem>
-          </Menu>
-        </>
-      ) : (
-        <h6>
-          <CircularProgress />
-        </h6>
-      )}
-    </div>
+    <>
+      <AlertMessage
+        open={error !== undefined}
+        handleClose={() => {
+          setError(undefined);
+        }}
+        severity="error"
+        errorMessage={error as string}
+      />
+      <div className="w-full flex-col border-right max-h-full h-full">
+        <h2 className="panel-title text-center bg-gray-100 border-bottom">
+          Explorer
+        </h2>
+        {!isLoading && providers ? (
+          <>
+            <TreeView
+              aria-label="rich object"
+              defaultCollapseIcon={<TableViewIcon />}
+              defaultExpanded={["root"]}
+              defaultExpandIcon={<TableViewIcon />}
+              className="w-full overflow-x-scroll overflow-y-auto h-[95%]"
+              multiSelect
+              key={0}
+              expanded={expanded}
+            >
+              {providerFetched &&
+                providers.map((provider) => {
+                  return renderTree(provider, provider.id);
+                })}
+            </TreeView>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={rightClickMenu}
+              onClose={handleCopy}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={handleCopy}>Copy Resource Name</MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <h6>
+            <CircularProgress />
+          </h6>
+        )}
+      </div>
+    </>
   );
 };
 

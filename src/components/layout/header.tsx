@@ -5,32 +5,26 @@ import DataObjectIcon from "@mui/icons-material/DataObject";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
 import "../../styles/Home.module.css";
-import SaveButton from "../splitbutton/SaveButton";
+import SaveButton from "../splitbutton/save-button";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useQueryContext } from "../../contexts/queryContext/useQueryContext";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useState } from "react";
+import { AddUrlButton } from "./add-url-button";
+import { AlertMessage } from "./alert";
+import { fetchQuery } from "../../fetch";
 
 const Header = () => {
-  const { query, setQueryResults, setQueryRunning, queryRunning } =
+  const { query, setQueryResults, setQueryRunning, queryRunning, serverUrl } =
     useQueryContext();
   const [errorMessage, setErrorMessage] = useState("");
   const [queryError, setQueryError] = useState(false);
   const handleToggle = async (dts = false) => {
-    let url = "/api/stackql";
-    if (dts) {
-      url = url + "?dts=true";
-    }
-    const request = new Request(url, {
-      body: query,
-      method: "POST",
-    });
     setQueryRunning(true);
     try {
-      const response = await fetch(request);
+      const response = await fetchQuery({ query, dts, serverUrl });
       setQueryRunning(false);
 
       const resJson = await response.json();
@@ -46,14 +40,8 @@ const Header = () => {
     }
   };
 
-  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-  ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
   const handleClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
@@ -65,11 +53,12 @@ const Header = () => {
 
   return (
     <>
-      <Snackbar open={queryError} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        open={queryError}
+        handleClose={handleClose}
+        severity="error"
+        errorMessage={errorMessage}
+      />
       <div className="bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-8 pt-3 pb-3 flex items-center">
         <div className="w-1/6 flex-col">
           <Image alt="logo" src="/logo-original.svg" width={162} height={32} />
@@ -108,8 +97,9 @@ const Header = () => {
             {/* <SplitButton /> */}
           </Stack>
         </div>
-        <div className="w-1/6 flex-col mr-10">
+        <div className="w-1/3 mr-10">
           <Stack direction="row" spacing={2} justifyContent="right">
+            <AddUrlButton />
             <a href="https://github.com/stackql/stackql-playground">
               <IconButton aria-label="GitHub repository">
                 <GitHubIcon />

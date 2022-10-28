@@ -4,14 +4,17 @@ import {
   Provider,
   RenderTree,
   Resource,
-  ResourceMethod,
   Service,
   SubResourceItemKey,
 } from "../../types";
-import { getDataFromResponse, middlewareUrl } from "./_common";
+import {
+  getDataFromResponse,
+  defaultMiddlewareUrl,
+  validateAddress,
+} from "./_common";
 
-const getUrl = () => {
-  return middlewareUrl;
+let getUrl = () => {
+  return defaultMiddlewareUrl;
 };
 
 const readItemPath = (path?: string) => {
@@ -127,13 +130,21 @@ const getSubResourceItem = async ({
   });
 };
 
-const getResData = async (path: string | undefined) => {
+const getResData = async (path: string | undefined, serverUrl?: string) => {
   const { provider, service, resource } = readItemPath(path);
+  if (serverUrl) {
+    getUrl = () => {
+      if (validateAddress(serverUrl)) {
+        return serverUrl;
+      }
+      return defaultMiddlewareUrl;
+    };
+  }
   if (provider && !service) {
-    return await getServices(provider);
+    return getServices(provider);
   }
   if (provider && service && !resource) {
-    return await getResource(provider, service);
+    return getResource(provider, service);
   }
   if (provider && service && resource) {
     const fieldTree: RenderTree = await createSubResourceNode({
@@ -150,7 +161,7 @@ const getResData = async (path: string | undefined) => {
     });
     return [fieldTree, methodTree];
   }
-  return await getProviders();
+  return getProviders();
 };
 
 export default async function handler(
@@ -159,7 +170,10 @@ export default async function handler(
 ) {
   const queryParams = req.query;
   try {
-    const resData = await getResData(queryParams.path as string | undefined);
+    const resData = await getResData(
+      queryParams.path as string,
+      queryParams.serverUrl as string
+    );
     const entityTree = resData as RenderTree[];
     res.status(200).json(entityTree);
   } catch (error) {
