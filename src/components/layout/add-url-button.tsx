@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useQueryContext } from "../../contexts/queryContext/useQueryContext";
 import { primaryColorHex } from "../../types";
 import { DialogButton } from "../dialog-button";
+import PowerIcon from "@mui/icons-material/Power";
+import PowerOffIcon from "@mui/icons-material/PowerOff";
 
 export const AddUrlButton = () => {
   const { setServerUrl, serverUrl } = useQueryContext();
@@ -16,9 +18,8 @@ export const AddUrlButton = () => {
       autoFocus
       margin="dense"
       id="name"
-      placeholder={serverUrl || "https://"}
       type="url"
-      defaultValue={serverUrl}
+      defaultValue={serverUrl || "http://localhost:8080"}
       fullWidth
       onChange={(event) => {
         setInputText(event.target.value);
@@ -31,15 +32,25 @@ export const AddUrlButton = () => {
     />
   );
 
+  const ButtonContent = () => {
+    return (
+      <div className="flex items-center text-center">
+        {serverUrl ? <PowerIcon /> : <PowerOffIcon />}
+        <p className="pt-0.5">{title}</p>
+      </div>
+    );
+  };
+
   const onSubmit = () => {
     handleSubmit();
   };
   return (
     <DialogButton
       title={title}
-      buttonText={title}
+      buttonContent={<ButtonContent />}
       textField={textField}
       onSubmit={onSubmit}
+      subText={"Enter the endpoint URL"}
     />
   );
 };

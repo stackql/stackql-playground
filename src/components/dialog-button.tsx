@@ -13,14 +13,14 @@ export interface ButtonDialogFormProps {
   title: string;
   textField?: ReactElement | ReactElement[];
   subText?: string;
-  buttonText?: string;
+  buttonContent?: string | ReactElement | ReactElement[];
   onSubmit?: () => void;
 }
 
 export const DialogButton = ({
   title,
   subText,
-  buttonText,
+  buttonContent: buttonText,
   textField,
   onSubmit,
 }: ButtonDialogFormProps) => {
@@ -43,7 +43,7 @@ export const DialogButton = ({
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        className="text-primary border border-primary bg-white"
+        className="text-primary border border-primary bg-white px-2"
       >
         {buttonText}
       </Button>
