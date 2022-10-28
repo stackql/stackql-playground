@@ -5,9 +5,11 @@ interface IQueryContextProps {
   query: string;
   queryRunning: boolean;
   queryResults?: { data: any; returnText: boolean; metadata: QueryMetadata };
+  serverUrl?: string;
   setQuery: (query: any) => void;
   setQueryRunning: (loading: boolean) => void;
   setQueryResults: (results: any) => void;
+  setServerUrl: (url: string) => void;
 }
 
 export interface IQueryResult {
@@ -24,6 +26,7 @@ export const QueryContext = React.createContext<IQueryContextProps>({
   setQuery: () => {},
   setQueryRunning: () => {},
   setQueryResults: () => {},
+  setServerUrl: () => {},
 });
 
 export const QueryContextProvider = ({
@@ -34,6 +37,7 @@ export const QueryContextProvider = ({
   const [query, setEditorQuery] = useState<string>(defaultQuery);
   const [queryRunning, setQueryRunning] = useState<boolean>(false);
   const [queryResults, setQueryResults] = useState<any>(undefined);
+  const [serverUrl, setServerUrl] = useState<string | undefined>(undefined);
 
   return (
     <QueryContext.Provider
@@ -43,9 +47,11 @@ export const QueryContextProvider = ({
         setQuery: (query: string) => {
           setEditorQuery(query);
         },
+        serverUrl,
         setQueryRunning,
         queryResults,
         setQueryResults,
+        setServerUrl,
       }}
     >
       {children}

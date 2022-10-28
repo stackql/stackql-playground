@@ -1,13 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getDataFromResponse, middlewareUrl } from "./_common";
+import {
+  getDataFromResponse,
+  defaultMiddlewareUrl,
+  validateAddress,
+} from "./_common";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let url = `${middlewareUrl}/stackql`;
+  let url = defaultMiddlewareUrl;
   const queryParams = req.query;
   let returnText = false;
+  const serverUrl = queryParams.serverUrl as string;
+  if (serverUrl && validateAddress(serverUrl)) url = serverUrl;
+  url = `${url}/stackql`;
+
   url = url + "?showMetadata=";
   if (queryParams.dts) {
     url = url + "&dts=";
