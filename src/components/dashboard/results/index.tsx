@@ -6,7 +6,7 @@ import { IQueryResult } from "../../../contexts/queryContext/queryContext";
 import { Tab, Tabs } from "@mui/material";
 import { QueryMetadata } from "../../../types";
 import { CopyButton } from "../../copy-button/CopyButton";
-import SaveButton from "../../splitbutton/SaveButton";
+import SaveButton from "../../splitbutton/save-button";
 import SimCardDownloadOutlinedIcon from "@mui/icons-material/SimCardDownloadOutlined";
 import json2csv from "json2csv";
 import React from "react";

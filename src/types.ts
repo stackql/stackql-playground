@@ -55,3 +55,5 @@ export interface QueryMetadata {
   };
 }
 export type SubResourceItemKey = "methods" | "fields";
+
+export const primaryColorHex = "#0F4C81";
