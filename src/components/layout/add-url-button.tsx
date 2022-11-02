@@ -35,7 +35,7 @@ export const AddUrlButton = () => {
   const ButtonContent = () => {
     return (
       <>
-        <p className="pt-0.5 tablet:hidden">{title}</p>
+        <p className="pt-0.5 tablet:hidden mobile:hidden">{title}</p>
       </>
     );
   };

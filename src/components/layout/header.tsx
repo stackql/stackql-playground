@@ -66,11 +66,11 @@ const Header = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div className="bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-3 py-3 items-center grid grid-flow-col grid-cols-9 gap-x-1">
-        <div className="flex-col col-span-1 justify-center pt-2 pr-2">
+      <div className="bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-3 py-3 mobile:py-1 items-center grid grid-flow-col grid-cols-9 gap-x-1">
+        <div className="flex-col col-span-1 tablet:col-span-2 mobile:col-span-2  justify-center pt-2 pr-2">
           <Image alt="logo" src="/logo-original.svg" width={162} height={32} />
         </div>
-        <div className="col-span-3 flex space-x-9 pl-1">
+        <div className="col-span-3 tablet:col-span-2 mobile:col-span-2 flex space-x-9 tablet:space-x-3 mobile:space-x-1 pl-1">
           <Button
             onClick={async () => {
               await handleToggle();
@@ -79,7 +79,7 @@ const Header = () => {
             className="button-primary"
             startIcon={<PlayCircleFilledWhiteIcon />}
           >
-            <p className="tablet:hidden">Run Query</p>
+            <p className="tablet:hidden mobile:hidden">Run Query</p>
           </Button>
           <Button
             variant="outlined"
@@ -89,10 +89,10 @@ const Header = () => {
               await handleToggle(true);
             }}
           >
-            <p className="tablet:hidden">Get Types</p>
+            <p className="tablet:hidden mobile:hidden">Get Types</p>
           </Button>
         </div>
-        <div className="col-start-8  col-span-2 regular:col-start-7 regular:col-span-3 flex justify-end space-x-2">
+        <div className="col-start-8 mobile:col-start-9   col-span-2 mobile:col-span-1 regular:col-start-7 regular:col-span-3 flex justify-end space-x-2 mobile:space-x-0">
           <AddUrlButton />
           <a href="https://github.com/stackql/stackql-playground">
             <IconButton aria-label="GitHub repository">

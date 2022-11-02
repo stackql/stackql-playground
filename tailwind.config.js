@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     screens: {
       mobile: { max: "500px" },
-      tablet: { max: "850px" },
-      regular: { max: "1500px" },
+      tablet: { max: "850px", min:'501px' },
+      regular: { max: "1500px", min:'850px' },
     },
     extend: {
       colors: {

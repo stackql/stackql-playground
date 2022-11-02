@@ -34,4 +34,7 @@
   @screen tablet {
     @apply border-0 bg-gray-50 w-0;
   }
+  @screen mobile {
+    @apply border-0 bg-gray-50 w-0;
+  }
 }
