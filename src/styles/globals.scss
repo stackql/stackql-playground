@@ -27,3 +27,11 @@
 .Mui-selected {
   @apply text-primary #{!important};
 }
+
+.button-primary {
+  @apply text-primary border border-primary bg-white;
+
+  @screen tablet {
+    @apply border-0 bg-gray-50 w-0;
+  }
+}
