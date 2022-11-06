@@ -50,6 +50,8 @@ const Header = () => {
 
     setQueryError(false);
   };
+  const QueryButtonText = "Run Query";
+  const TypeButtonText = "Get Types";
 
   return (
     <>
@@ -77,13 +79,18 @@ const Header = () => {
             }}
             variant="outlined"
             className="button-primary"
-            startIcon={
-              <PlayCircleFilledWhiteIcon className="mobile:hidden mobile:m-0 tablet:hidden tablet:m-0" />
-            }
+            startIcon={<PlayCircleFilledWhiteIcon />}
           >
-            <PlayCircleFilledWhiteIcon className="hidden  tablet:inline mobile:inline" />
-            <p className="tablet:hidden mobile:hidden">Run Query</p>
+            {QueryButtonText}
           </Button>
+          <IconButton
+            onClick={async () => {
+              await handleToggle();
+            }}
+            className="icon-button-primary"
+          >
+            <PlayCircleFilledWhiteIcon />
+          </IconButton>
           <Button
             variant="outlined"
             className="button-primary"
@@ -92,10 +99,18 @@ const Header = () => {
               await handleToggle(true);
             }}
           >
-            <p className="tablet:hidden mobile:hidden">Get Types</p>
+            {TypeButtonText}
           </Button>
+          <IconButton
+            onClick={async () => {
+              await handleToggle(true);
+            }}
+            className="icon-button-primary"
+          >
+            <DataObjectIcon />
+          </IconButton>
         </div>
-        <div className="col-start-8 mobile:col-start-9   col-span-2 mobile:col-span-1 regular:col-start-7 regular:col-span-3 flex justify-end space-x-2 mobile:space-x-0">
+        <div className="col-start-8 mobile:col-start-9   col-span-2 mobile:col-span-1 regular:col-start-7 regular:col-span-3 flex justify-end space-x-2 mobile:space-x-0 items-center">
           <AddUrlButton />
           <a href="https://github.com/stackql/stackql-playground">
             <IconButton aria-label="GitHub repository">

@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
 } from "@mui/material";
 import { ReactElement, useState } from "react";
 import PowerIcon from "@mui/icons-material/Power";
@@ -49,6 +50,9 @@ export const DialogButton = ({
       >
         {buttonText}
       </Button>
+      <IconButton onClick={handleClickOpen} className="icon-button-primary">
+        <PowerIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>

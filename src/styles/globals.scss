@@ -32,15 +32,14 @@
   @apply text-primary border border-primary bg-white;
 
   @screen tablet {
-    @apply border-0 bg-gray-50 w-0 p-0;
+    @apply hidden;
   }
   @screen mobile {
-    @apply border-0 bg-gray-50 min-w-0 p-0;
+    @apply hidden;
   }
 }
-
-.button-start-icon {
-  @apply tablet:hidden mobile:hidden;
+.icon-button-primary {
+  @apply text-primary hidden tablet:inline-flex mobile:inline-flex;
 }
 
 .header-right-group {
@@ -61,11 +60,11 @@
 }
 
 .header-left-stack {
-  @apply col-span-3 flex space-x-9 mobile:space-x-5 pl-1;
+  @apply col-span-3 flex space-x-9  pl-1;
   @screen tablet {
-    @apply col-span-2 space-x-3;
+    @apply col-span-3 space-x-3;
   }
   @screen mobile {
-    @apply col-span-2 space-x-5;
+    @apply col-span-3 space-x-2;
   }
 }
