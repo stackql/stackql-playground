@@ -13,7 +13,7 @@
 }
 
 .panel-title {
-  @apply text-lg font-semibold py-1 text-gray-600;
+  @apply text-lg font-semibold py-1 text-gray-600 bg-gray-100 border-bottom;
 }
 
 .border-right {
@@ -67,4 +67,8 @@
   @screen mobile {
     @apply col-span-3 space-x-2;
   }
+}
+
+.pane {
+  @apply flex h-full w-full flex-col;
 }

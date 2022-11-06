@@ -38,19 +38,23 @@ const Dashboard = () => {
   };
   return (
     <div
-      className="flex w-screen max-h-full h-full overflow-hidden  mobile:flex-col"
+      className="flex w-screen max-h-full min-h-full overflow-hidden  mobile:flex-col"
       key={Math.random()}
     >
       <Resizable
         defaultSize={leftPaneSize()}
-        maxWidth={windowSize.isMobile ? "100%" : "50%"}
+        maxWidth={"50%"}
         minWidth="1"
         minHeight={"4.5%"}
-        maxHeight={windowSize.isMobile ? "50%" : "100%"}
+        maxHeight={"100%"}
         enable={leftPaneExpandEnable()}
+        className="mobile:hidden"
       >
         <Explorer />
       </Resizable>
+      <div className="hidden mobile:block max-h-full">
+        <Explorer />
+      </div>
       <div
         aria-label="query and result container"
         className="flex flex-col w-full  h-full"
@@ -75,7 +79,7 @@ const Dashboard = () => {
         >
           <QueryPanel />
         </Resizable>
-        <div className="min-h-[10%] h-full">
+        <div className="h-full">
           <ResultsPanel />
         </div>
       </div>

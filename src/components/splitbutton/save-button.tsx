@@ -54,7 +54,7 @@ export default function SplitButton({
           disabled={disable}
         >
           <span>{startIcon}</span>
-          <span className="pt-1 px-0.5">{buttonText}</span>
+          <span className="pt-1 px-0.5 mobile:hidden">{buttonText}</span>
           <span>{<ArrowDropDownIcon fontSize="small" />}</span>
         </Button>
       </ButtonGroup>

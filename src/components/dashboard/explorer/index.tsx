@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import { populateItemTree } from "./utils";
 import { useQueryContext } from "../../../contexts/queryContext/useQueryContext";
 import { AlertMessage } from "../../layout/alert";
+import { useWindowSize } from "../../../contexts/useWindowSize";
+import Collapsible from "../../layout/collapse";
 
 const Explorer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,6 +28,8 @@ const Explorer = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const rightClickMenu = Boolean(anchorEl);
   const { serverUrl } = useQueryContext();
+
+  const { isMobile, isTablet } = useWindowSize();
 
   useEffect(() => {
     setLoading(true);
@@ -137,20 +141,9 @@ const Explorer = () => {
     </TreeItem>
   );
   const providerFetched = providers && providers.length;
-  return (
-    <>
-      <AlertMessage
-        open={error !== undefined}
-        handleClose={() => {
-          setError(undefined);
-        }}
-        severity="error"
-        errorMessage={error as string}
-      />
-      <div className="w-full flex-col border-right h-full resize-none">
-        <h2 className="panel-title text-center bg-gray-100 border-bottom">
-          Explorer
-        </h2>
+  const Content = () => {
+    return (
+      <>
         {!isLoading && providers ? (
           <>
             <TreeView
@@ -186,7 +179,35 @@ const Explorer = () => {
             <CircularProgress />
           </h6>
         )}
+      </>
+    );
+  };
+  return (
+    <>
+      <AlertMessage
+        open={error !== undefined}
+        handleClose={() => {
+          setError(undefined);
+        }}
+        severity="error"
+        errorMessage={error as string}
+      />
+      <div className="w-full flex-col border-right h-full resize-none mobile:hidden">
+        {
+          // TODO: make collapsible intelligently render this class when not in mobile
+        }
+        <h2 className="panel-title text-center bg-gray-100 border-bottom">
+          Explorer
+        </h2>
+        <Content />
       </div>
+      <Collapsible
+        containerClass="w-full flex-col border-right h-full resize-none hidden mobile:block"
+        label="Explorer"
+        open={!isMobile}
+      >
+        <Content />
+      </Collapsible>
     </>
   );
 };
