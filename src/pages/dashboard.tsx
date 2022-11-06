@@ -2,32 +2,52 @@ import Explorer from "../components/dashboard/explorer";
 import QueryPanel from "../components/dashboard/query";
 import ResultsPanel from "../components/dashboard/results";
 import Layout from "../components/layout";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { Resizable } from "re-resizable";
+import { useWindowSize } from "../contexts/useWindowSize";
 
 const Dashboard = () => {
+  const windowSize = useWindowSize();
+  const leftPaneSize = () => {
+    if (windowSize.isMobile) {
+      return {
+        width: "100%",
+        height: "20%",
+      };
+    }
+    return {
+      width: "15%",
+      height: "100%",
+    };
+  };
+  const leftPaneExpandEnable = () => {
+    const enable = {
+      top: false,
+      right: true,
+      bottom: false,
+      left: false,
+      topRight: false,
+      bottomRight: false,
+      bottomLeft: false,
+      topLeft: false,
+    };
+    if (windowSize.isMobile) {
+      return { ...enable, bottom: true, right: false };
+    }
+    return enable;
+  };
   return (
     <div
-      className="flex w-screen max-h-full h-full overflow-hidden"
+      className="flex w-screen max-h-full h-full overflow-hidden  mobile:flex-col"
       key={Math.random()}
     >
       <Resizable
-        defaultSize={{
-          width: "12%",
-          height: "100%",
-        }}
-        maxWidth="100%"
+        defaultSize={leftPaneSize()}
+        maxWidth={windowSize.isMobile ? "100%" : "50%"}
         minWidth="1"
-        enable={{
-          top: false,
-          right: true,
-          bottom: false,
-          left: false,
-          topRight: false,
-          bottomRight: false,
-          bottomLeft: false,
-          topLeft: false,
-        }}
+        minHeight={"4.5%"}
+        maxHeight={windowSize.isMobile ? "50%" : "100%"}
+        enable={leftPaneExpandEnable()}
       >
         <Explorer />
       </Resizable>

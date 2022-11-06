@@ -147,7 +147,7 @@ const Explorer = () => {
         severity="error"
         errorMessage={error as string}
       />
-      <div className="w-full flex-col border-right max-h-full h-full">
+      <div className="w-full flex-col border-right h-full resize-none">
         <h2 className="panel-title text-center bg-gray-100 border-bottom">
           Explorer
         </h2>

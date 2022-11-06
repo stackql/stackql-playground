@@ -32,9 +32,23 @@
   @apply text-primary border border-primary bg-white;
 
   @screen tablet {
-    @apply border-0 bg-gray-50 w-0;
+    @apply border-0 bg-gray-50 w-0 p-0;
   }
   @screen mobile {
-    @apply border-0 bg-gray-50 w-0;
+    @apply border-0 bg-gray-50 min-w-0 p-0;
+  }
+}
+
+.button-start-icon {
+  @apply tablet:hidden mobile:hidden;
+}
+
+.header-right-group {
+  @apply col-start-8  col-span-2  flex justify-end space-x-2;
+  @screen mobile {
+    @apply col-start-9 col-span-1 space-x-0;
+  }
+  @screen regular {
+    @apply col-start-7 col-span-3;
   }
 }

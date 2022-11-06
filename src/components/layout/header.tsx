@@ -77,8 +77,11 @@ const Header = () => {
             }}
             variant="outlined"
             className="button-primary"
-            startIcon={<PlayCircleFilledWhiteIcon />}
+            startIcon={
+              <PlayCircleFilledWhiteIcon className="mobile:hidden mobile:m-0 tablet:hidden tablet:m-0" />
+            }
           >
+            <PlayCircleFilledWhiteIcon className="hidden mobile:inline" />
             <p className="tablet:hidden mobile:hidden">Run Query</p>
           </Button>
           <Button
