@@ -66,11 +66,11 @@ const Header = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div className="bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-3 py-3 mobile:py-1 items-center grid grid-flow-col grid-cols-9 gap-x-1">
+      <div className="header-left-group">
         <div className="flex-col col-span-1 tablet:col-span-2 mobile:col-span-2  justify-center pt-2 pr-2">
           <Image alt="logo" src="/logo-original.svg" width={162} height={32} />
         </div>
-        <div className="col-span-3 tablet:col-span-2 mobile:col-span-2 flex space-x-9 tablet:space-x-3 mobile:space-x-1 pl-1">
+        <div className="header-left-stack">
           <Button
             onClick={async () => {
               await handleToggle();
@@ -81,7 +81,7 @@ const Header = () => {
               <PlayCircleFilledWhiteIcon className="mobile:hidden mobile:m-0 tablet:hidden tablet:m-0" />
             }
           >
-            <PlayCircleFilledWhiteIcon className="hidden mobile:inline" />
+            <PlayCircleFilledWhiteIcon className="hidden  tablet:inline mobile:inline" />
             <p className="tablet:hidden mobile:hidden">Run Query</p>
           </Button>
           <Button

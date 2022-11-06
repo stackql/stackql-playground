@@ -52,3 +52,20 @@
     @apply col-start-7 col-span-3;
   }
 }
+
+.header-left-group {
+  @apply bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-3 py-3 items-center grid grid-flow-col grid-cols-9 gap-x-1;
+  @screen mobile {
+    @apply py-1;
+  }
+}
+
+.header-left-stack {
+  @apply col-span-3 flex space-x-9 mobile:space-x-5 pl-1;
+  @screen tablet {
+    @apply col-span-2 space-x-3;
+  }
+  @screen mobile {
+    @apply col-span-2 space-x-5;
+  }
+}
