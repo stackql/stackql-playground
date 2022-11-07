@@ -29,7 +29,7 @@ const Explorer = () => {
   const rightClickMenu = Boolean(anchorEl);
   const { serverUrl } = useQueryContext();
 
-  const { isMobile, isTablet } = useWindowSize();
+  const { isMobile } = useWindowSize();
 
   useEffect(() => {
     setLoading(true);
@@ -192,7 +192,7 @@ const Explorer = () => {
         severity="error"
         errorMessage={error as string}
       />
-      <div className="w-full flex-col border-right h-full resize-none mobile:hidden">
+      <div className="w-full flex-col border-right h-full resize-none mobile:hidden ">
         {
           // TODO: make collapsible intelligently render this class when not in mobile
         }
@@ -202,7 +202,7 @@ const Explorer = () => {
         <Content />
       </div>
       <Collapsible
-        containerClass="w-full flex-col border-right h-full resize-none hidden mobile:block"
+        containerClass=" hidden w-full flex-col border-right h-full resize-none mobile:inline-flex"
         label="Explorer"
         open={!isMobile}
       >
