@@ -52,7 +52,7 @@ const Dashboard = () => {
       >
         <Explorer />
       </Resizable>
-      <div className="hidden mobile:inline-flex mobile:min-h-fit mobile:max-h-full  mobile:resize-y">
+      <div className="hidden mobile:inline-flex mobile:min-h-[1%]   mobile:resize-y">
         <Explorer />
       </div>
       <div

@@ -204,7 +204,7 @@ const Explorer = () => {
       <Collapsible
         containerClass=" hidden w-full flex-col border-right h-full resize-none mobile:inline-flex"
         label="Explorer"
-        open={!isMobile}
+        open={false}
       >
         <Content />
       </Collapsible>
