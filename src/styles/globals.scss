@@ -13,7 +13,7 @@
 }
 
 .panel-title {
-  @apply text-lg font-semibold py-1 text-gray-600;
+  @apply text-lg font-semibold py-1 text-gray-600 bg-gray-100 border-bottom;
 }
 
 .border-right {
@@ -26,4 +26,49 @@
 
 .Mui-selected {
   @apply text-primary #{!important};
+}
+
+.button-primary {
+  @apply text-primary border border-primary bg-white;
+
+  @screen tablet {
+    @apply hidden;
+  }
+  @screen mobile {
+    @apply hidden;
+  }
+}
+.icon-button-primary {
+  @apply text-primary hidden tablet:inline-flex mobile:inline-flex;
+}
+
+.header-right-group {
+  @apply col-start-8  col-span-2  flex justify-end space-x-2;
+  @screen mobile {
+    @apply col-start-9 col-span-1 space-x-0;
+  }
+  @screen regular {
+    @apply col-start-7 col-span-3;
+  }
+}
+
+.header-left-group {
+  @apply bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-3 py-3 items-center grid grid-flow-col grid-cols-9 gap-x-1;
+  @screen mobile {
+    @apply py-1;
+  }
+}
+
+.header-left-stack {
+  @apply col-span-3 flex space-x-9  pl-1;
+  @screen tablet {
+    @apply col-span-3 space-x-3;
+  }
+  @screen mobile {
+    @apply col-span-3 space-x-2;
+  }
+}
+
+.pane {
+  @apply flex h-full w-full flex-col;
 }

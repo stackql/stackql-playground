@@ -9,10 +9,10 @@ import { CopyQueryButton } from "./copy-query";
 const QueryPanel = () => {
   return (
     <div
-      className="w-full h-full flex flex-col border-bottom"
+      className="w-full h-full flex flex-col border-bottom mobile:border-t"
       key={Math.random()}
     >
-      <h2 className="panel-title pl-2 bg-gray-100 border-bottom">Query</h2>
+      <h2 className="panel-title pl-2 ">Query</h2>
       <div className="h-[90%] relative">
         <CopyQueryButton />
         <QueryEditor />

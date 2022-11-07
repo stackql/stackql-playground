@@ -105,9 +105,9 @@ export default function ResultsPanel() {
     },
   ];
   return (
-    <div className="flex h-full w-full flex-col">
-      <div className="flex bg-gray-100 border-bottom justify-between w-full pr-2">
-        <h2 className="panel-title pl-2 w-1/5">Results</h2>
+    <div className="pane">
+      <div className="flex panel-title justify-between w-full pr-2 py-0">
+        <h2 className="py-0 pt-1.5 pl-2 w-1/5">Results</h2>
         <SaveButton
           options={resultOptions}
           buttonText="Save Results"

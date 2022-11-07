@@ -5,8 +5,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
 } from "@mui/material";
 import { ReactElement, useState } from "react";
+import PowerIcon from "@mui/icons-material/Power";
 
 export interface ButtonDialogFormProps {
   open?: boolean;
@@ -39,14 +41,18 @@ export const DialogButton = ({
   };
 
   return (
-    <div>
+    <>
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        className="text-primary border border-primary bg-white px-2"
+        startIcon={<PowerIcon />}
+        className="button-primary"
       >
         {buttonText}
       </Button>
+      <IconButton onClick={handleClickOpen} className="icon-button-primary">
+        <PowerIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
@@ -69,6 +75,6 @@ export const DialogButton = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };

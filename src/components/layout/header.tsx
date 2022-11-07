@@ -50,6 +50,8 @@ const Header = () => {
 
     setQueryError(false);
   };
+  const QueryButtonText = "Run Query";
+  const TypeButtonText = "Get Types";
 
   return (
     <>
@@ -59,53 +61,62 @@ const Header = () => {
         severity="error"
         errorMessage={errorMessage}
       />
-      <div className="bg-gray-50 min-h-fit rounded-none border-b border-b-gray-300 pl-8 pt-3 pb-3 flex items-center">
-        <div className="w-1/6 flex-col">
+      <Backdrop
+        className="w-screen ml-0"
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={queryRunning}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <div className="header-left-group">
+        <div className="flex-col col-span-1 tablet:col-span-2 mobile:col-span-2  justify-center pt-2 pr-2">
           <Image alt="logo" src="/logo-original.svg" width={162} height={32} />
         </div>
-        <div className="w-4/6 flex-col">
-          <Stack direction="row" spacing={2}>
-            <Button
-              onClick={async () => {
-                await handleToggle();
-              }}
-              variant="outlined"
-              className="text-primary border border-primary bg-white"
-              startIcon={<PlayCircleFilledWhiteIcon />}
-            >
-              Run Query
-            </Button>
-
-            <Backdrop
-              className="w-screen ml-0"
-              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={queryRunning}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-
-            <Button
-              variant="outlined"
-              className="text-primary border border-primary bg-white"
-              startIcon={<DataObjectIcon />}
-              onClick={async () => {
-                await handleToggle(true);
-              }}
-            >
-              Get Types
-            </Button>
-            {/* <SplitButton /> */}
-          </Stack>
+        <div className="header-left-stack">
+          <Button
+            onClick={async () => {
+              await handleToggle();
+            }}
+            variant="outlined"
+            className="button-primary"
+            startIcon={<PlayCircleFilledWhiteIcon />}
+          >
+            {QueryButtonText}
+          </Button>
+          <IconButton
+            onClick={async () => {
+              await handleToggle();
+            }}
+            className="icon-button-primary"
+          >
+            <PlayCircleFilledWhiteIcon />
+          </IconButton>
+          <Button
+            variant="outlined"
+            className="button-primary"
+            startIcon={<DataObjectIcon />}
+            onClick={async () => {
+              await handleToggle(true);
+            }}
+          >
+            {TypeButtonText}
+          </Button>
+          <IconButton
+            onClick={async () => {
+              await handleToggle(true);
+            }}
+            className="icon-button-primary"
+          >
+            <DataObjectIcon />
+          </IconButton>
         </div>
-        <div className="w-1/3 mr-10">
-          <Stack direction="row" spacing={2} justifyContent="right">
-            <AddUrlButton />
-            <a href="https://github.com/stackql/stackql-playground">
-              <IconButton aria-label="GitHub repository">
-                <GitHubIcon />
-              </IconButton>
-            </a>
-          </Stack>
+        <div className="col-start-8 mobile:col-start-9   col-span-2 mobile:col-span-1 regular:col-start-7 regular:col-span-3 flex justify-end space-x-2 mobile:space-x-0 items-center">
+          <AddUrlButton />
+          <a href="https://github.com/stackql/stackql-playground">
+            <IconButton aria-label="GitHub repository">
+              <GitHubIcon />
+            </IconButton>
+          </a>
         </div>
       </div>
     </>

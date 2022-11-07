@@ -34,10 +34,11 @@ export const AddUrlButton = () => {
 
   const ButtonContent = () => {
     return (
-      <div className="flex items-center text-center">
-        {serverUrl ? <PowerIcon /> : <PowerOffIcon />}
-        <p className="pt-0.5">{title}</p>
-      </div>
+      <>
+        <p className="pt-0.5 tablet:hidden mobile:hidden regular:text-xs regular:leading-6">
+          {title}
+        </p>
+      </>
     );
   };
 
