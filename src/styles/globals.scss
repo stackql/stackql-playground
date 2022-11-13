@@ -71,6 +71,6 @@
   }
 
   .pane {
-    @apply flex h-full w-full flex-col;
+    @apply h-[90%] w-full flex min-h-0 flex-col;
   }
 }

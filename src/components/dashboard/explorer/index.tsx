@@ -143,7 +143,7 @@ const Explorer = () => {
     return (
       <>
         {!isLoading && providers ? (
-          <div className="w-full h-[90%] overflow-auto">
+          <div className="w-full h-full min-h-0 overflow-auto">
             <TreeView
               aria-label="rich object"
               defaultCollapseIcon={<TableViewIcon />}
@@ -190,13 +190,15 @@ const Explorer = () => {
         severity="error"
         errorMessage={error as string}
       />
-      <div className="w-full flex-col border-right h-full resize-none mobile:hidden ">
+      <div className="w-full flex flex-col border-right h-full resize-none mobile:hidden ">
         {
           // TODO: make collapsible intelligently render this class when not in mobile
         }
-        <h2 className="panel-title text-center bg-gray-100 border-bottom">
-          Explorer
-        </h2>
+        <div>
+          <h2 className="panel-title text-center bg-gray-100 border-bottom">
+            Explorer
+          </h2>
+        </div>
         <Content />
       </div>
       <Collapsible

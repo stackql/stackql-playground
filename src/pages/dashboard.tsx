@@ -38,7 +38,7 @@ const Dashboard = () => {
   };
   return (
     <div
-      className="flex w-screen max-h-full min-h-full overflow-hidden mobile:flex-col"
+      className="flex w-screen max-h-full  h-full overflow-hidden mobile:flex-col"
       key={Math.random()}
     >
       <Resizable
@@ -80,9 +80,7 @@ const Dashboard = () => {
         >
           <QueryPanel />
         </Resizable>
-        <div className="min-h-[10%] h-full">
-          <ResultsPanel />
-        </div>
+        <ResultsPanel />
       </div>
     </div>
   );

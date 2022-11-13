@@ -49,7 +49,7 @@ const TabPanel = ({
   return (
     <>
       {value === index && (
-        <div className="w-full h-[90%] rounded-sm bg-gray-50 shadow-sm relative">
+        <div className="w-full h-full rounded-sm bg-gray-50 shadow-sm relative min-h-0">
           {children}
         </div>
       )}
@@ -106,7 +106,7 @@ export default function ResultsPanel() {
   ];
   return (
     <div className="pane">
-      <div className="flex panel-title justify-between w-full pr-2 py-0">
+      <div className="flex panel-title justify-between w-full pr-2 py-0 h-12">
         <h2 className="py-0 pt-1.5 pl-2 w-1/5">Results</h2>
         <SaveButton
           options={resultOptions}
@@ -122,6 +122,7 @@ export default function ResultsPanel() {
         TabIndicatorProps={{
           className: "bg-primary",
         }}
+        className="h-9"
       >
         {/* selected tab is styled in global.scss with .Mui-selected class */}
         <Tab
