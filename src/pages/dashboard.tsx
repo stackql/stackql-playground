@@ -38,7 +38,7 @@ const Dashboard = () => {
   };
   return (
     <div
-      className="flex w-screen max-h-full min-h-full overflow-hidden mobile:flex-col"
+      className="flex w-screen max-h-full  h-full overflow-hidden mobile:flex-col"
       key={Math.random()}
     >
       <Resizable
@@ -57,7 +57,7 @@ const Dashboard = () => {
       </div>
       <div
         aria-label="query and result container"
-        className="flex flex-col w-full  h-full"
+        className="flex flex-col w-full overflow-hidden"
         key={Math.random()}
       >
         <Resizable
@@ -65,7 +65,8 @@ const Dashboard = () => {
             width: "100%",
             height: "50%",
           }}
-          minHeight={"10%"}
+          minHeight={"4.5%"}
+          maxHeight={"100%"}
           enable={{
             top: false,
             right: false,
@@ -79,9 +80,7 @@ const Dashboard = () => {
         >
           <QueryPanel />
         </Resizable>
-        <div className="h-full">
-          <ResultsPanel />
-        </div>
+        <ResultsPanel />
       </div>
     </div>
   );
