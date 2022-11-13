@@ -21,13 +21,14 @@ const Editor = ({
       language={language}
       onChange={onChange}
       padding={15}
-      className="w-full overflow-auto h-full max-h-full"
+      className="w-full overflow-hidden h-full max-h-full"
       style={{
         fontWeight: 700,
         fontSize: 14,
         backgroundColor: "rgb(249 250 251 / var(--tw-bg-opacity))",
         fontFamily:
           "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+        overflow: "auto",
       }}
     />
   );
