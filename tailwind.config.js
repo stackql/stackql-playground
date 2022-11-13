@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  important: true,
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  important: "#__next",
+  content: [    
+  "./src/pages/**/*.{js,ts,jsx,tsx}",
+  "./src/components/**/*.{js,ts,jsx,tsx}",],
   theme: {
     screens: {
       mobile: { max: "500px" },
@@ -16,6 +18,9 @@ module.exports = {
         sans: ['"Open Sans"'],
       },
     },
+  },
+  corePlugins: {
+    preflight: true,
   },
   plugins: [],
 };

@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
 import Head from "next/head";
 import { LicenseInfo } from "@mui/x-license-pro";
-
+import packageJson from "../../package.json";
 const muiKey = process.env.MUI_KEY;
 if (muiKey) LicenseInfo.setLicenseKey(muiKey);
 
@@ -15,7 +15,7 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-export const appVersion = "v0.0.1";
+export const appVersion = packageJson.version;
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
