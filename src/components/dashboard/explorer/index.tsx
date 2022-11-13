@@ -29,8 +29,6 @@ const Explorer = () => {
   const rightClickMenu = Boolean(anchorEl);
   const { serverUrl } = useQueryContext();
 
-  const { isMobile } = useWindowSize();
-
   useEffect(() => {
     setLoading(true);
     fetchExplorer({ serverUrl })
@@ -145,13 +143,13 @@ const Explorer = () => {
     return (
       <>
         {!isLoading && providers ? (
-          <>
+          <div className="w-full h-[90%] overflow-auto">
             <TreeView
               aria-label="rich object"
               defaultCollapseIcon={<TableViewIcon />}
               defaultExpanded={["root"]}
               defaultExpandIcon={<TableViewIcon />}
-              className="w-full overflow-x-scroll overflow-y-auto h-[95%]"
+              className="w-full"
               multiSelect
               key={0}
               expanded={expanded}
@@ -173,7 +171,7 @@ const Explorer = () => {
             >
               <MenuItem onClick={handleCopy}>Copy Resource Name</MenuItem>
             </Menu>
-          </>
+          </div>
         ) : (
           <h6>
             <CircularProgress />
@@ -202,7 +200,7 @@ const Explorer = () => {
         <Content />
       </div>
       <Collapsible
-        containerClass=" hidden w-full flex-col border-right h-full resize-none mobile:inline-flex"
+        containerClass=" hidden w-full flex-col border-right h-full mobile:inline-flex"
         label="Explorer"
         open={false}
       >
