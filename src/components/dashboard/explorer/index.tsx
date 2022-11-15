@@ -10,7 +10,7 @@ import { ItemLevel, RenderTree } from "../../../types";
 import { CircularProgress, Menu, MenuItem } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import { fetchExplorer } from "../../../fetch";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { populateItemTree } from "./utils";
 import { useQueryContext } from "../../../contexts/queryContext/useQueryContext";
 import { AlertMessage } from "../../layout/alert";
@@ -18,17 +18,15 @@ import { useWindowSize } from "../../../contexts/useWindowSize";
 import Collapsible from "../../layout/collapse";
 
 const Explorer = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selectedNode, setSelectedNode] = React.useState<null | RenderTree>(
-    null
-  );
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedNode, setSelectedNode] = useState<null | RenderTree>(null);
   const [providers, setProviders] = useState<RenderTree[] | null>(null);
   const [expanded, setExpanded] = useState<string[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const rightClickMenu = Boolean(anchorEl);
   const { serverUrl } = useQueryContext();
-
+  let scrollRef = useRef<number>(0);
   useEffect(() => {
     setLoading(true);
     fetchExplorer({ serverUrl })
@@ -43,6 +41,11 @@ const Explorer = () => {
         setLoading(false);
       });
   }, [serverUrl]);
+
+  useEffect(() => {
+    const explorerContainer = document.getElementById("explorer-container");
+    if (explorerContainer) explorerContainer.scrollTop = scrollRef.current;
+  }, [providers]);
 
   const handleRightClick = (
     event: React.MouseEvent<HTMLElement>,
@@ -85,8 +88,8 @@ const Explorer = () => {
       const updatedRoot = providers?.find((node) => node.id === rootId);
       if (updatedRoot) {
         const updatedTree = populateItemTree(updatedRoot, node, children);
-        console.log("updatedTree is %o", updatedTree);
         updateItemTreeState(updatedTree);
+
         expandNode();
       }
       setLoading(false);
@@ -141,9 +144,17 @@ const Explorer = () => {
   const providerFetched = providers && providers.length;
   const Content = () => {
     return (
-      <>
+      <div
+        className="w-full h-full min-h-0 overflow-auto"
+        id="explorer-container"
+        onScroll={() => {
+          const scroll =
+            document.getElementById("explorer-container")?.scrollTop;
+          if (scroll) scrollRef.current = scroll;
+        }}
+      >
         {!isLoading && providers ? (
-          <div className="w-full h-full min-h-0 overflow-auto">
+          <>
             <TreeView
               aria-label="rich object"
               defaultCollapseIcon={<TableViewIcon />}
@@ -171,13 +182,13 @@ const Explorer = () => {
             >
               <MenuItem onClick={handleCopy}>Copy Resource Name</MenuItem>
             </Menu>
-          </div>
+          </>
         ) : (
           <h6>
             <CircularProgress />
           </h6>
         )}
-      </>
+      </div>
     );
   };
   return (
